@@ -20,23 +20,7 @@ namespace MudExtensions
             using var registerScope = CreateRegisterScope();
             _passwordMode = registerScope.RegisterParameter<bool>(nameof(PasswordMode))
                 .WithParameter(() => PasswordMode)
-                .WithEventCallback(() => PasswordModeChanged)
-                .WithChangeHandler(OnPasswordChanged);
-        }
-
-        private void OnPasswordChanged()
-        {
-            if (_passwordMode.Value)
-            {
-                _passwordInput = InputType.Password;
-                _passwordIcon = Icons.Material.Filled.VisibilityOff;
-            }
-            else
-            {
-                _passwordInput = InputType.Text;
-                _passwordIcon = Icons.Material.Filled.Visibility;
-            }
-            StateHasChanged();
+                .WithEventCallback(() => PasswordModeChanged);
         }
 
         private readonly ParameterState<bool> _passwordMode;
@@ -53,8 +37,10 @@ namespace MudExtensions
         /// 
         /// </summary>
         public MudInputExtended<string?> InputReference { get; private set; } = null!;
-        InputType _passwordInput = InputType.Password;
-        string? _passwordIcon = Icons.Material.Filled.VisibilityOff;
+        private InputType GetPasswordInputType() => _passwordMode.Value ? InputType.Password : InputType.Text;
+        private string? GetPasswordIcon() => _passwordMode.Value ? Icons.Material.Filled.VisibilityOff : Icons.Material.Filled.Visibility;
+        //InputType _passwordInput = InputType.Password;
+        //string? _passwordIcon = Icons.Material.Filled.VisibilityOff;
 
         [CascadingParameter(Name = "Standalone")]
         internal bool StandaloneEx { get; set; } = true;
