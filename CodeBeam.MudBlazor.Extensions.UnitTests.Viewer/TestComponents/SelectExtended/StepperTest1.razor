@@ -7,8 +7,8 @@
 <MudGrid Class="cursor-default">
     <MudItem xs="12" sm="8">
         <MudStepperExtended @ref="_stepper" ContentStyle="min-height: 400px" Linear="_linear" Vertical="_vertical" Color="_color" Variant="_variant"
-                    DisableAnimation="_disableAnimation" DisablePreviousButton="_disablePreviousButton" DisableNextButton="_disableNextButton"
-                    DisableSkipButton="_disableSkipButton" DisableStepResultIndicator="_disableStepResultIndicator" HeaderTextView="_headerTextView"
+                    Animation="_animation" ShowPreviousButton="_showPreviousButton" ShowNextButton="_showNextButton"
+                    ShowSkipButton="_showSkipButton" ShowStepResultIndicator="_showStepResultIndicator" HeaderTextView="_headerTextView"
                     PreventStepChangeAsync="new Func<StepChangeDirection, int, Task<bool>>(CheckChange)" LocalizedStrings="GetLocalizedStrings()"
                     MobileView="_mobileView" IconActionButtons="_iconActionButtons" Loading="_loading">
             <StaticContent>
@@ -71,11 +71,11 @@
         <MudStack Spacing="4">
             <MudNumericField @bind-Value="_activeIndex" Label="Change ActiveIndex" @bind-Value:after="(() => _stepper.SetActiveStepByIndex(_activeIndex))" Margin="Margin.Dense" />
             <MudCheckBox @bind-Value="_linear" Color="Color.Primary" Label="Linear" Dense="true" />
-            <MudCheckBox @bind-Value="_disableAnimation" Color="Color.Primary" Label="Disable Animation" Dense="true" />
-            <MudCheckBox @bind-Value="_disablePreviousButton" Color="Color.Primary" Label="Disable Previous Step Action Button" Dense="true" />
-            <MudCheckBox @bind-Value="_disableNextButton" Color="Color.Primary" Label="Disable Next Step Action Button" Dense="true" />
-            <MudCheckBox @bind-Value="_disableSkipButton" Color="Color.Primary" Label="Disable Skip Step Action Button" Dense="true" />
-            <MudCheckBox @bind-Value="_disableStepResultIndicator" Color="Color.Primary" Label="Disable Step Result Indicator" Dense="true" />
+            <MudCheckBox @bind-Value="_animation" Color="Color.Primary" Label="Enable Animation" Dense="true" />
+            <MudCheckBox @bind-Value="_showPreviousButton" Color="Color.Primary" Label="Enable Previous Step Action Button" Dense="true" />
+            <MudCheckBox @bind-Value="_showNextButton" Color="Color.Primary" Label="Enable Next Step Action Button" Dense="true" />
+            <MudCheckBox @bind-Value="_showSkipButton" Color="Color.Primary" Label="Enable Skip Step Action Button" Dense="true" />
+            <MudCheckBox @bind-Value="_showStepResultIndicator" Color="Color.Primary" Label="Enable Step Result Indicator" Dense="true" />
             <MudSwitchM3 @bind-Value="_mobileView" Color="Color.Primary" Label="Mobile View" />
             <MudSwitchM3 @bind-Value="_iconActionButtons" Color="Color.Primary" Label="IconActionButtons" />
             <MudSwitchM3 @bind-Value="_addResultStep" Color="Color.Primary" Label="Has Result Step" />
@@ -109,11 +109,11 @@
     bool _iconActionButtons;
     Variant _variant = Variant.Filled;
     HeaderTextView _headerTextView = HeaderTextView.All;
-    bool _disableAnimation = false;
-    bool _disablePreviousButton = false;
-    bool _disableNextButton = false;
-    bool _disableSkipButton = false;
-    bool _disableStepResultIndicator = false;
+    bool _animation = true;
+    bool _showPreviousButton = true;
+    bool _showNextButton = true;
+    bool _showSkipButton = true;
+    bool _showStepResultIndicator = true;
     bool _addResultStep = true;
     bool _customLocalization = false;
     Color _color = Color.Primary;

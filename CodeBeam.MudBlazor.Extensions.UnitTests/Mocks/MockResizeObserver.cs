@@ -125,5 +125,10 @@ namespace MudExtensions.UnitTests.Mocks
         {
 
         }
+
+        public Task Resync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
