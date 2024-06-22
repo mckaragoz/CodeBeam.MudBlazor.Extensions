@@ -28,7 +28,7 @@
         </MudItem>
 
         <MudItem xs="12" sm="6">
-            <MudSelectExtended ItemCollection="_players" DisableSelectedBackground="true" ValuePresenter="ValuePresenter.Chip" MultiSelection="true" Placeholder="Both Templates & MultiSelection" Label="Select Player" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectExtended ItemCollection="_players" DisableSelectedItemStyle="true" ValuePresenter="ValuePresenter.Chip" MultiSelection="true" Placeholder="Both Templates & MultiSelection" Label="Select Player" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
                 <ItemTemplate>
                     <MudStack Class="mud-width-full" Justify="Justify.SpaceBetween">
                         <MudText><b>@context.Value?.Item1</b></MudText>
