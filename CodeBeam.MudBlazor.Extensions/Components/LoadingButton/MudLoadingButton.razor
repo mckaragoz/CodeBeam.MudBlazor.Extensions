@@ -40,7 +40,7 @@ else if (ButtonVariant == ButtonVariant.IconButton)
     <MudIconButton Disabled="@(Disabled ? true : _loading.Value ? true : false)"
                Size="@Size" Class="@Class" Style="@Style" UserAttributes="@UserAttributes" Variant="@Variant" Color="@Color" OnClick="@ButtonClick"
                Href="@Href" Target="@Target" ButtonType="@ButtonType" DropShadow="@DropShadow" Ripple="@Ripple"
-               Icon="@(_loading.Value ? null : Icon)" HtmlTag="@HtmlTag" Title="@Title">
+               Icon="@(_loading.Value ? null : Icon)" HtmlTag="@HtmlTag">
         @if (_loading.Value)
         {
             <div class="d-flex align-center">
@@ -69,7 +69,7 @@ else if (ButtonVariant == ButtonVariant.Fab)
         Size="@Size" Class="@Class" Style="@Style" UserAttributes="@UserAttributes" Color="@Color" OnClick="@ButtonClick"
         Href="@Href" Target="@Target" ButtonType="@ButtonType" DropShadow="@DropShadow" Ripple="@Ripple"
         StartIcon="@StartIcon" EndIcon="@EndIcon" IconColor="@IconColor" IconSize="@IconSize" Label="@Label"
-        HtmlTag="@HtmlTag" Title="@Title" />
+        HtmlTag="@HtmlTag" />
     }
     else
     {
