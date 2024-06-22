@@ -212,7 +212,7 @@ namespace MudExtensions
             if (MudComboBox is null)
                 return true;
 
-            if (!MudComboBox.Editable || MudComboBox.DisableFilter)
+            if (!MudComboBox.Editable || MudComboBox.EnableFilter == false)
                 return true;
 
             if (string.IsNullOrWhiteSpace(MudComboBox._searchString))

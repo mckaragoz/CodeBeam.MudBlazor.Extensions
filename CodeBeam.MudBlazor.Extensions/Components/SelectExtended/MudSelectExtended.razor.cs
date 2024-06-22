@@ -164,18 +164,18 @@ namespace MudExtensions
         public string? PopoverClass { get; set; }
 
         /// <summary>
-        /// User class names for the popover, separated by space
+        /// 
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.FormComponent.ListAppearance)]
-        public bool DisablePopoverPadding { get; set; }
+        public bool EnablePopoverPadding { get; set; } = true;
 
         /// <summary>
         /// If true, selected items doesn't have a selected background color.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.List.Appearance)]
-        public bool DisableSelectedItemStyle { get; set; }
+        public bool EnableSelectedItemStyle { get; set; } = true;
 
         /// <summary>
         /// 

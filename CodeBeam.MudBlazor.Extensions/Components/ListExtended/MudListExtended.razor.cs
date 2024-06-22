@@ -330,7 +330,7 @@ namespace MudExtensions
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.List.Appearance)]
-        public bool DisableSelectedItemStyle { get; set; }
+        public bool EnableSelectedItemStyle { get; set; } = true;
 
         /// <summary>
         /// If true, compact vertical padding will be applied to all list items.
