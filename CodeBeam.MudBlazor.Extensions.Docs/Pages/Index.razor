@@ -13,25 +13,43 @@
 <MudAnimate @ref="_animate" Selector=".card-blur" AnimationType="AnimationType.Blur" Duration="0.3" Value="0" ValueSecondary="120" />
 <MudInputStyler Selector=".search-style" BaseColor="var(--mud-palette-secondary)" />
 
-<MudContainer Class="d-flex flex-column align-center justify-start pa-4 top-container" MaxWidth="MaxWidth.False">
-    <div class="d-flex align-baseline justify-center mt-6" @onmouseenter="@(() => _hover = true)" @onmouseleave="@(() => _hover = false)">
+<MudContainer Class="d-flex flex-column align-center justify-start pt-4 px-4 top-container" MaxWidth="MaxWidth.False">
+    <div class="d-flex justify-center mt-2" @onmouseenter="@(() => _hover = true)" @onmouseleave="@(() => _hover = false)">
         <MudText Class="slogan" Align="Align.Center">The</MudText>
         <MudText Class="slogan" Align="Align.Center" Color="Color.Primary">Mud</MudText>
-        <MudText Class="slogan2" Align="Align.Center" Color="Color.Secondary">@GetSloganText()</MudText>
     </div>
-    <div class="d-flex align-baseline gap-2 justify-center mt-n2 mb-4">
-        <MudText Class="slogan3" Align="Align.Center">by</MudText>
-        <MudLink Class="slogan3" Href="https://github.com/CodeBeamOrg" Target="_blank" Color="Color.Info" Underline="Underline.Hover">CodeBeam</MudLink>
+    <MudText Class="slogan2 mt-n4" Align="Align.Center" Color="Color.Secondary">Secondary</MudText>
+    <MudDivider Style="width: 24vw" />
+    <div class="sub-slogan-container px-4 mt-8">
+        <MudText Class="sub-slogan" Align="Align.Center">Your<MudText Class="sub-slogan ps-2" Inline="true" Color="Color.Secondary">ultimate</MudText><MudText Class="sub-slogan">MudBlazor extension.</MudText></MudText>
     </div>
 
-    <div class="d-flex align-baseline gap-2 justify-center mt-4 mb-16 mud-width-full">
-        <MudButton Href="https://github.com/CodeBeamOrg/CodeBeam.MudBlazor.Extensions" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined"><MudText>GitHub</MudText></MudButton>
-        <MudButton Href="https://trymudextensions.pages.dev/" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined"><MudText Align="Align.Center">Try MudExtensions</MudText></MudButton>
-        <MudButton Href="https://www.nuget.org/packages/CodeBeam.MudBlazor.Extensions" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined"><MudText>NuGet</MudText></MudButton>
+    <div class="d-flex align-baseline gap-2 mt-2 justify-center mb-4">
+        <MudText Typo="Typo.subtitle2" Align="Align.Center">by</MudText>
+        <MudLink Typo="Typo.subtitle2" Href="https://github.com/CodeBeamOrg" Target="_blank" Color="Color.Secondary" Underline="Underline.Hover">CodeBeam</MudLink>
+    </div>
+
+    <div class="d-flex align-center gap-4 mt-4">
+        <MudTooltip Text="Check Repository" Delay="300" Color="Color.Secondary">
+            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/CodeBeamOrg/CodeBeam.MudBlazor.Extensions" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined" />
+        </MudTooltip>
+        <MudTooltip Text="Install From NuGet" Delay="300" Color="Color.Secondary">
+            <MudIconButton Icon="@Icons.Material.Filled.Download" Href="https://www.nuget.org/packages/CodeBeam.MudBlazor.Extensions" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined" />
+        </MudTooltip>
+        <MudTooltip Text="Try Components Online" Delay="300" Color="Color.Secondary">
+            <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Href="https://trymudextensions.pages.dev/" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined" />
+        </MudTooltip>
+        <MudTooltip Text="Be a Sponsor" Delay="300" Color="Color.Secondary">
+            <MudIconButton Icon="@Icons.Material.Filled.VolunteerActivism" Href="/beasponsor" Color="Color.Secondary" Variant="Variant.Outlined" />
+        </MudTooltip>
     </div>
 
     <div class="d-flex justify-center my-4">
-        <MudTextFieldExtended T="string" @bind-Value="_searchString" @bind-Value:after="@(() => _animate.Refresh())" Class="search-style" Style="width: calc(50px + 50vw)" Placeholder="What are you looking for?" Variant="Variant.Outlined" Clearable="true" />
+        <MudTextFieldExtended T="string" @bind-Value="_searchString" @bind-Value:after="@(() => _animate.Refresh())" Class="search-style" Style="width: calc(50px + 50vw)" Placeholder="What are you looking for?" Variant="Variant.Outlined" Clearable="true">
+            <AdornmentStart>
+                <MudIcon Icon="@Icons.Material.Filled.Search" Color="Color.Secondary" />
+            </AdornmentStart>
+        </MudTextFieldExtended>
     </div>
 
     @if (string.IsNullOrEmpty(_searchString) == true)
@@ -39,15 +57,39 @@
         <div class="d-flex align-baseline gap-2 justify-center mt-16 mb-8 card-blur">
             <MudGrid Class="justify-center">
                 <MudItem xs="12" sm="6" md="4" lg="3">
-                    <ComponentCard Title="Extended Components" Description="Known Mud components with new features added while keeping all existing features." ShowActionButton="false" NavigateToComponentPage="false" />
+                    <MudCard Elevation="0">
+                        <MudCardContent>
+                            <MudStack>
+                                <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.Webhook" Color="Color.Secondary" />
+                                <MudText Typo="Typo.h6" Color="Color.Secondary">OpenSource</MudText>
+                                <MudText Class="mt-4">MudExtensions is free forever on personal and commercial use.</MudText>
+                            </MudStack>
+                        </MudCardContent>
+                    </MudCard>
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="4" lg="3">
-                    <ComponentCard Title="Unique Components" Description="New Mud components that Mud Core doesn't have." ShowActionButton="false" NavigateToComponentPage="false" />
+                    <MudCard Elevation="0">
+                        <MudCardContent>
+                            <MudStack>
+                                <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.Widgets" Color="Color.Secondary" />
+                                <MudText Typo="Typo.h6" Color="Color.Secondary">Component & Utility</MudText>
+                                <MudText Class="mt-4">MudExtensions has 30+ components and utilities from the core library contributors. Suits perfectly with MudBlazor core library.</MudText>
+                            </MudStack>
+                        </MudCardContent>
+                    </MudCard>
                 </MudItem>
 
                 <MudItem xs="12" sm="6" md="4" lg="3">
-                    <ComponentCard Title="Be a Sponsor" Description="You can help the basic expenses of the project." ShowActionButton="false" ComponentName="BeASponsor" />
+                    <MudCard Elevation="0">
+                        <MudCardContent>
+                            <MudStack>
+                                <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.VerticalSplit" Color="Color.Secondary" />
+                                <MudText Typo="Typo.h6" Color="Color.Secondary">Unique & Extended</MudText>
+                                <MudText Class="mt-4">MudExtensions has unique components that has familiar Mud design. Library also has extended components that adds additional features on current Mud Core components. (While keeping all existing features)</MudText>
+                            </MudStack>
+                        </MudCardContent>
+                    </MudCard>
                 </MudItem>
             </MudGrid>
         </div>
@@ -130,7 +172,7 @@
 
     <MudContainer Class="mt-16" MaxWidth="MaxWidth.Large">
         <MudToolBar Gutters="false" Dense="true">
-            <MudText Typo="Typo.body1"><b>Copyright © 2022-@DateTime.Now.Year CodeBeam.</b> @Version</MudText>
+            <MudText Typo="Typo.body1"><b>OpenSource © 2022-@DateTime.Now.Year CodeBeam.</b> @Version</MudText>
             <MudSpacer />
                 <MudText Typo="Typo.body1">Running on <b>.NET</b> @Environment.Version.ToString()</MudText>
             </MudToolBar>
@@ -140,7 +182,7 @@
 <style>
     .slogan {
         color: var(--mud-palette-text-primary);
-        font-size: calc(16px + 6vw);
+        font-size: calc(20px + 4vw);
         font-weight: 900;
         font-family: "Roboto";
         letter-spacing: 0;
@@ -154,10 +196,10 @@
 
     .slogan2 {
         color: var(--mud-palette-text-primary);
-        font-size: calc(16px + 6vw);
+        font-size: calc(12px + 1vw);
         font-weight: 900;
         font-family: "Roboto";
-        letter-spacing: 0;
+        letter-spacing: -0.1vw;
         transition: all 1s;
         user-select: none;
     }
@@ -168,7 +210,7 @@
 
     .top-container {
         min-height: 100vh;
-        background-color: var(--mud-palette-background-gray);
+        background-color: var(--mud-palette-background);
         overflow: hidden;
     }
 
@@ -176,6 +218,27 @@
         color: var(--mud-palette-text-primary);
         font-size: 24px;
         font-weight: 300;
+    }
+
+    .sub-slogan {
+        font-size: calc(24px + 0.2vw);
+        font-weight: 300;
+        font-family: "Roboto";
+    }
+
+    .sub-slogan-container {
+        transition: 1s all;
+        border-left: 12px dotted var(--mud-palette-secondary);
+        border-right: 12px dotted var(--mud-palette-secondary);
+        width: calc(100px + 90vw);
+        max-width: 94vw;
+    }
+
+    .sub-slogan-container:hover {
+            border-left-width: 4px;
+            border-right-width: 4px;
+            width: 20vw;
+            min-width: 180px;
     }
 </style>
 

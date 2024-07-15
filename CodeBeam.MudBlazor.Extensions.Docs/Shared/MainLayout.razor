@@ -1,4 +1,5 @@
 ﻿@namespace MudExtensions.Docs.Shared
+@inject NavigationManager NavigationManager
 @inherits LayoutComponentBase
 
 <style>
@@ -7,16 +8,13 @@
 
 <CascadingValue Value="this" IsFixed="true">
     <MudLayout>
-    <MudAppBar Class="background-gradient-animation mud-width-full" Style="background: linear-gradient(-45deg, var(--mud-palette-dark), var(--mud-palette-primary), var(--mud-palette-dark), var(--mud-palette-secondary), var(--mud-palette-dark)); background-size: 400% 400%; position: fixed; overflow-x: hidden" Dense="true">
-
-            <MudIconButton Class="white-text" Icon="@Icons.Material.Filled.Menu" OnClick="@(() => _drawerOpen = !_drawerOpen)"></MudIconButton>
-            <MudIconButton Class="white-text" Icon="@Icons.Custom.Brands.MudBlazor" Href="https://mudblazor.com/" Target="_blank" />
-            <MudSpacer />
-            <MudText Style="font-weight: 900; color: white">CodeBeam MudExtensions</MudText>
+    <MudAppBar Class="background-gradient-animation mud-width-full" Style="background: var(--mud-palette-background) !important;" Dense="true" Elevation="0">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="@(() => _drawerOpen = !_drawerOpen)"></MudIconButton>
+            <MudText Style="color: var(--mud-palette-text-primary); cursor: pointer" @onclick="@(() => NavigationManager.NavigateTo("/"))"><b>MudExtensions</b></MudText>
             <MudSpacer />
             <div class="d-flex">
-                <MudToggleIconButton @bind-Toggled="IsDarkMode" Class="white-text" Icon="@Icons.Material.Filled.DarkMode" ToggledIcon="@Icons.Material.Filled.LightMode"/>
-                <MudIconButton Class="white-text" Icon="@Icons.Material.Filled.Settings" OnClick="@ToggleOpen"/>
+                <MudToggleIconButton @bind-Toggled="IsDarkMode" Icon="@Icons.Material.Filled.DarkMode" ToggledIcon="@Icons.Material.Filled.LightMode"/>
+                <MudIconButton Icon="@Icons.Material.Filled.Settings" OnClick="@ToggleOpen"/>
                 @if (_open == true)
                 {
                     <MudPopover Class="pa-4" Open="_open" AnchorOrigin="Origin.TopLeft" TransformOrigin="Origin.BottomRight" Style="width: 320px; height: 400px">
@@ -31,9 +29,6 @@
             </div>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" Elevation="1" Variant="@DrawerVariant.Responsive" ClipMode="DrawerClipMode.Docked">
-    <MudDrawerHeader>
-        <MudText Typo="Typo.h6">MudExtensions</MudText>
-    </MudDrawerHeader>
     <MudNavMenu Color="Color.Secondary" Bordered="true">
         <MudNavLink Href="/api">Api</MudNavLink>
         <MudNavGroup Title="Components">
@@ -119,7 +114,7 @@
     bool _open = false;
     bool _drawerOpen = false;
     bool _showFontPicker = false;
-    int _borderRadius = 20;
+    int _borderRadius = 12;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
