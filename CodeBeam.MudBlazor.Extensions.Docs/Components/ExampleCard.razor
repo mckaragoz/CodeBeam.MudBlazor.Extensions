@@ -1,6 +1,9 @@
 ﻿@namespace MudExtensions.Docs.Components
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+@inject IJsApiService JSApiService
 
-<a id="@ExampleName" class="my-16"><MudDivider Class="my-16"></MudDivider></a>
+<a id="@AliasName" class="my-16"><MudDivider Class="my-16"></MudDivider></a>
 
 @if (HasExpansionPanel)
 {
@@ -29,6 +32,16 @@ else
                 <MudText Class="example-card-text" Typo="Typo.body2" Color="Color.Inherit">@Description</MudText>
                 <MudDivider />
             </div>
+            <MudSpacer />
+            @if (ShowCodeSection)
+            {
+                <MudTooltip Text="Copy Example Code" Delay="300" Color="Color.Secondary">
+                    <MudIconButton Class="me-2" Icon="@Icons.Material.Filled.Code" OnClick="CopyExampleCode" Size="Size.Small" Color="Color.Secondary" Variant="Variant.Outlined" />
+                </MudTooltip>
+            }
+            <MudTooltip Text="Copy Example Link" Delay="300" Color="Color.Secondary">
+                <MudIconButton Icon="@Icons.Material.Filled.Link" OnClick="CopyExampleLink" Size="Size.Small" Color="Color.Secondary" Variant="Variant.Outlined" />
+            </MudTooltip>
         </MudCardHeader>
         <MudCardContent>
             <div class="pa-2" style="background: var(--mud-palette-background);">
@@ -60,6 +73,9 @@ else
 
     [Parameter]
     public string? ExampleName { get; set; }
+
+    [Parameter]
+    public string? AliasName { get; set; }
 
     [Parameter]
     public string? Title { get; set; }
@@ -104,6 +120,23 @@ else
                     break;
             }
         }
+    }
+
+    private async Task CopyExampleLink()
+    {
+        await JSApiService.CopyToClipboardAsync(NavigationManager.BaseUri + "mud" + ComponentName?.ToLower() + "#" + AliasName);
+        Snackbar.Add("Example link copied.", Severity.Info);
+    }
+
+    private async Task CopyExampleCode()
+    {
+        string code = "";
+        foreach (var item in _lines)
+        {
+            code += item + Environment.NewLine;
+        }
+        await JSApiService.CopyToClipboardAsync(code);
+        Snackbar.Add("Example code copied.", Severity.Info);
     }
 }
 

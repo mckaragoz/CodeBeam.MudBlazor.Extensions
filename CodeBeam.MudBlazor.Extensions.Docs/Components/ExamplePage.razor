@@ -1,12 +1,38 @@
 ﻿@inject NavigationManager NavigationManager
 @namespace MudExtensions.Docs.Components
+@inject MudExtensionsDocsService DocsService
 
 <CascadingValue Value="this" IsFixed="true">
     <MudContainer Class="py-6 px-0">
-        <div class="py-6 d-flex gap-4">
+        <div class="pt-6 pb-2 d-flex flex-wrap align-center gap-4">
             <MudIconButton Class="ms-2 ms-sm-0" Icon="@Icons.Material.Filled.ArrowBack" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => NavigationManager.NavigateTo("/"))" />
-            <MudText Typo="Typo.h4" Color="Color.Secondary">@Title</MudText>
+            <MudText Typo="Typo.h4" Color="Color.Secondary">@_component?.Title</MudText>
+            <MudSpacer />
+            @if (_component?.IsUtility == true)
+            {
+                <MudChip T="string" Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">Utility</MudChip>
+            }
+            else if(_component?.IsUnique == false)
+            {
+                <MudTooltip Text="Core library has a similar component." Delay="300" Color="Color.Secondary" Arrow="true">
+                    <MudChip T="string" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">Extended Component</MudChip>
+                </MudTooltip>
+            }
+            else
+            {
+                <MudTooltip Text="Core library doesn't have a similar component." Delay="300" Color="Color.Secondary" Arrow="true">
+                    <MudChip T="string" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">Unique Component</MudChip>
+                </MudTooltip>
+            }
+
+            @if (_component?.IsMaterial3 == true)
+            {
+                <MudTooltip Text="Conforms to Material 3 specifications." Delay="300" Color="Color.Info" Arrow="true">
+                    <MudChip T="string" Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">Material 3</MudChip>
+                </MudTooltip>
+            }
         </div>
+        <MudText Class="ms-2 ms-sm-0" Typo="Typo.h6">@_component?.Description</MudText>
         @ChildContent
     </MudContainer>
 </CascadingValue>
@@ -16,5 +42,16 @@
     public string? Title { get; set; }
 
     [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
     public RenderFragment? ChildContent { get; set; }
+
+    private MudExtensionComponentInfo? _component = new();
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        _component = DocsService.GetAllComponentInfo().FirstOrDefault(x => x.Title == Title);
+    }
 }

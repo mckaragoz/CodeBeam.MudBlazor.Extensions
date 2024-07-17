@@ -1,5 +1,6 @@
 ﻿@namespace MudExtensions.Docs.Shared
 @inject NavigationManager NavigationManager
+@inject MudExtensionsDocsService DocsService
 @inherits LayoutComponentBase
 
 <style>
@@ -9,7 +10,7 @@
 <CascadingValue Value="this" IsFixed="true">
     <MudLayout>
     <MudAppBar Class="background-gradient-animation mud-width-full" Style="background: var(--mud-palette-background) !important;" Dense="true" Elevation="0">
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="@(() => _drawerOpen = !_drawerOpen)"></MudIconButton>
+            <MudIconButton Class="ms-n2" Icon="@Icons.Material.Filled.Menu" OnClick="@(() => _drawerOpen = !_drawerOpen)"></MudIconButton>
             <MudText Style="color: var(--mud-palette-text-primary); cursor: pointer" @onclick="@(() => NavigationManager.NavigateTo("/"))"><b>MudExtensions</b></MudText>
             <MudSpacer />
             <div class="d-flex">
@@ -32,37 +33,10 @@
     <MudNavMenu Color="Color.Secondary" Bordered="true">
         <MudNavLink Href="/api">Api</MudNavLink>
         <MudNavGroup Title="Components">
-            <MudNavLink Href="/mudanimate">Animate</MudNavLink>
-            <MudNavLink Href="/mudbarcode">Barcode</MudNavLink>
-            <MudNavLink Href="/mudchipfield">ChipField</MudNavLink>
-            <MudNavLink Href="/mudcodeinput">CodeInput</MudNavLink>
-            <MudNavLink Href="/mudcolorprovider">ColorProvider</MudNavLink>
-            <MudNavLink Href="/mudcombobox">ComboBox</MudNavLink>
-            <MudNavLink Href="/mudcssmanager">CssManager</MudNavLink>
-            <MudNavLink Href="/mudcsvmapper">CsvMapper</MudNavLink>
-            <MudNavLink Href="/muddatewheelpicker">DateWheelPicker</MudNavLink>
-            <MudNavLink Href="/mudgallery">Gallery</MudNavLink>
-            <MudNavLink Href="/mudinputstyler">InputStyler</MudNavLink>
-            <MudNavLink Href="/mudlistextended">ListExtended</MudNavLink>
-            <MudNavLink Href="/mudloading">Loading</MudNavLink>
-            <MudNavLink Href="/mudloadingbutton">LoadingButton</MudNavLink>
-            <MudNavLink Href="/mudpage">Page & Section</MudNavLink>
-            <MudNavLink Href="/mudpasswordfield">PasswordField</MudNavLink>
-            <MudNavLink Href="/mudpopup">Popup</MudNavLink>
-            <MudNavLink Href="/mudrangeslider">Range Slider</MudNavLink>
-            <MudNavLink Href="/mudscrollbar">Scrollbar</MudNavLink>
-            <MudNavLink Href="/mudselectextended">SelectExtended</MudNavLink>
-            <MudNavLink Href="/mudsignaturepad">SignaturePad</MudNavLink>
-            <MudNavLink Href="/mudspeeddial">SpeedDial</MudNavLink>
-            <MudNavLink Href="/mudsplitter">Splitter</MudNavLink>
-            <MudNavLink Href="/mudstepperextended">StepperExtended</MudNavLink>
-            <MudNavLink Href="/mudswitchm3">SwitchM3</MudNavLink>
-            <MudNavLink Href="/mudteleport">Teleport</MudNavLink>
-            <MudNavLink Href="/mudtextfieldextended">TextFieldExtended</MudNavLink>
-            <MudNavLink Href="/mudtextm3">TextM3</MudNavLink>
-            <MudNavLink Href="/mudtransferlist">TransferList</MudNavLink>
-            <MudNavLink Href="/mudwatch">Watch</MudNavLink>
-            <MudNavLink Href="/mudwheel">Wheel</MudNavLink>
+            @foreach (var comp in DocsService.GetAllComponentInfo())
+            {
+                <MudNavLink Href="@($"/{comp.Title?.ToLowerInvariant()}")">@comp.Title?.Replace("Mud", "")</MudNavLink>
+            }
         </MudNavGroup>
         <MudNavGroup Title="Not Documented">
             <MudNavLink>FontPicker</MudNavLink>

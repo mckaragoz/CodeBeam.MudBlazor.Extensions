@@ -1,5 +1,6 @@
 ﻿@page "/"
 @namespace MudExtensions.Docs.Pages
+@inject MudExtensionsDocsService DocsService
 @using MudExtensions.Docs.Shared
 @using System.Runtime.Versioning
 
@@ -105,24 +106,24 @@
             <MudText Class="card-blur">Nothing Found. Try Something Else?</MudText>
         }
         <MudGrid Class="justify-center">
-            @foreach (var comp in _extendedComponents)
+            @foreach (var comp in _components.Where(x => x.IsUnique == false))
             {
-                if (string.IsNullOrEmpty(_searchString) || comp.Item1.Contains(_searchString, StringComparison.CurrentCultureIgnoreCase))
+                if (string.IsNullOrEmpty(_searchString) || comp.Title?.Contains(_searchString, StringComparison.CurrentCultureIgnoreCase) == true)
                 {
                     <MudItem Class="card-blur" xs="12" sm="6" md="4" lg="3" xl="2">
-                        <ComponentCard Title="@comp.Item1"
-                           Description="@comp.Item2" />
+                        <ComponentCard Title="@comp.Title"
+                           Description="@comp.Description" />
                     </MudItem>
                 }
             }
 
-            @foreach (var comp in _uniqueComponents)
+            @foreach (var comp in _components.Where(x => x.IsUnique == true))
             {
-                if (string.IsNullOrEmpty(_searchString) || comp.Item1.Contains(_searchString, StringComparison.CurrentCultureIgnoreCase))
+                if (string.IsNullOrEmpty(_searchString) || comp.Title?.Contains(_searchString, StringComparison.CurrentCultureIgnoreCase) == true)
                 {
                     <MudItem Class="card-blur" xs="12" sm="6" md="4" lg="3" xl="2">
-                        <ComponentCard Title="@comp.Item1"
-                           Description="@comp.Item2" />
+                        <ComponentCard Title="@comp.Title"
+                           Description="@comp.Description" />
                     </MudItem>
                 }
             }
@@ -137,11 +138,11 @@
         </div>
 
         <MudGrid Class="justify-center">
-            @foreach (var comp in _extendedComponents)
+            @foreach (var comp in _components.Where(x => x.IsUnique == false))
             {
                 <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                    <ComponentCard Title="@comp.Item1"
-                           Description="@comp.Item2" />
+                    <ComponentCard Title="@comp.Title"
+                           Description="@comp.Description" />
                 </MudItem>
             }
         </MudGrid>
@@ -152,12 +153,12 @@
         </div>
 
         <MudGrid>
-            @foreach (var comp in _uniqueComponents)
+            @foreach (var comp in _components.Where(x => x.IsUnique == true))
             {
 
                 <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                    <ComponentCard Title="@comp.Item1"
-                           Description="@comp.Item2" />
+                    <ComponentCard Title="@comp.Title"
+                           Description="@comp.Description" />
                 </MudItem>
 
             }
@@ -243,87 +244,6 @@
 </style>
 
 @code {
-    [CascadingParameter]
-    MainLayout? MainLayout { get; set; }
 
-    MudAnimate _animate = new();
 
-    bool _hover = false;
-    string? _searchString;
-
-    private string GetSloganText()
-    {
-        if (_hover)
-        {
-            return "Extension";
-        }
-        else
-        {
-            return "Secondary";
-        }
-    }
-
-    private bool NothingFound()
-    {
-        if (_extendedComponents.Select(x => x.Item1).ToList().Any(x => x.Contains(_searchString ?? "", StringComparison.CurrentCultureIgnoreCase)))
-        {
-            return false;
-        }
-
-        if (_uniqueComponents.Select(x => x.Item1).ToList().Any(x => x.Contains(_searchString ?? "", StringComparison.CurrentCultureIgnoreCase)))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    private string Version
-    {
-        get
-        {
-            var v = typeof(MudAnimate).Assembly.GetName().Version;
-            return $"v {v?.Major}.{v?.Minor}.{v?.Build}";
-        }
-    }
-
-    List<Tuple<string, string>> _extendedComponents = new()
-    {
-        new("MudListExtended", "The extended MudList component."),
-        new("MudSelectExtended", "The extended MudSelect component."),
-        new("MudStepperExtended", "A wizard-like steps to control the flow with rich options."),
-        new("MudTextFieldExtended", "The extended MudTextField component."),
-    };
-
-    List<Tuple<string, string>> _uniqueComponents = new()
-    {
-        new("MudAnimate", "A revolutionary next generation animate component."),
-        new("MudBarcode", "A QR and barcode viewer with defined value."),
-        new("MudChipField", "A textfield with returns chips with defined delimiter."),
-        new("MudCodeInput", "A group of textfields that each one can contain a char."),
-        new("MudColorProvider", "An extension for primary, secondary and tertiary colors to support Material 3."),
-        new("MudComboBox", "Unites MudSelect and MudAutocomplete features."),
-        new("MudCssManager", "Get and set component's css property."),
-        new("MudCsvMapper", "A .csv file uploader that matches the .csv file headers to supplied / expected headers."),
-        new("MudDateWheelPicker", "A date time picker with MudWheels."),
-        new("MudGallery", "Mobile friendly image gallery component."),
-        new("MudInputStyler", "Applies CSS colors easily for mud inputs like MudTextField and MudSelect."),
-        new("MudLoading", "Loading indicator for a whole page or a specific component."),
-        new("MudLoadingButton", "A classic MudButton with loading improvements."),
-        new("MudPage", "A CSS grid layout component that builds columns and rows, supports ColSpan & RowSpan."),
-        new("MudPasswordField", "A specialized textfield that designed for working easily with passwords."),
-        new("MudPopup", "A mobile friendly popup content for several situations."),
-        new("MudRangeSlider", "A slider with range capabilities, set upper and lower values."),
-        new("MudScrollbar", "Handle all or selected scrollbar styles with a Mud component."),
-        new("MudSignaturePad", "A signature pad."),
-        new("MudSpeedDial", "Stacked buttons in a menu content."),
-        new("MudSplitter", "A resizeable content splitter."),
-        new("MudSwitchM3", "Material 3 switch component that has all MudBlazor features."),
-        new("MudTeleport", "Teleport the content to the specified parent and not follow the DOM hierarchy."),
-        new("MudTextM3", "Material 3 typography"),
-        new("MudTransferList", "A component that has 2 lists that transfer items to another."),
-        new("MudWatch", "A performance optimized watch to show current time or show stopwatch or countdown."),
-        new("MudWheel", "Smoothly changes values in a wheel within defined ItemCollection.")
-        
-    };
 }
