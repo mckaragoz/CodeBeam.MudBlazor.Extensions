@@ -2,11 +2,19 @@
 @namespace MudExtensions.Docs.Components
 @inject MudExtensionsDocsService DocsService
 
+@if (_firstRender == false)
+{
+    <FixedTransition Component="_component" FadeIn="false" />
+}
+
 <CascadingValue Value="this" IsFixed="true">
     <MudContainer Class="py-6 px-0">
         <div class="pt-6 pb-2 d-flex flex-wrap align-center gap-4">
             <MudIconButton Class="ms-2 ms-sm-0" Icon="@Icons.Material.Filled.ArrowBack" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => NavigationManager.NavigateTo("/"))" />
-            <MudText Typo="Typo.h4" Color="Color.Secondary">@_component?.Title</MudText>
+            <MudText Typo="Typo.h4" Color="Color.Secondary">@(_component?.Title ?? Title)</MudText>
+            <MudTooltip Text="Source Code" Delay="300" Color="Color.Secondary">
+                <MudIconButton Icon="@Icons.Material.Filled.Code" Href="@($"https://github.com/CodeBeamOrg/CodeBeam.MudBlazor.Extensions/tree/dev/CodeBeam.MudBlazor.Extensions/Components/{_component?.Title?.Replace("Mud", null)}")" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" />
+            </MudTooltip>
             <MudSpacer />
             @if (_component?.IsUtility == true)
             {
@@ -40,10 +48,13 @@
         <MudText></MudText>
         @ChildContent
 
-        <a id="api" class="my-16"><MudDivider Class="my-16"></MudDivider></a>
-        <ExampleCard Title="@($"Api - {Component?.Name.Replace("`1", "")}")" ComponentName="@Component?.Name.Replace("Mud", "")" AliasName="api" ShowCodeSection="false">
-            <DocsApiTable Type="Component" Component="_component" />
-        </ExampleCard>
+        @if (_component != null)
+        {
+            <a id="api" class="my-16"><MudDivider Class="my-16"></MudDivider></a>
+            <ExampleCard Title="@($"Api - {Component?.Name.Replace("`1", "")}")" ComponentName="@Component?.Name.Replace("Mud", "")" AliasName="api" ShowCodeSection="false">
+                <DocsApiTable Type="Component" Component="_component" />
+            </ExampleCard>
+        }
     </MudContainer>
 </CascadingValue>
 
@@ -52,13 +63,31 @@
     public Type? Component { get; set; }
 
     [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public bool HideApi { get; set; }
+
+    [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
     private MudExtensionComponentInfo? _component = new();
+    bool _firstRender = false;
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
         _component = DocsService.GetAllComponentInfo().FirstOrDefault(x => x?.Title == Component?.Name.Replace("`1", ""));
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            _firstRender = true;
+            await Task.Delay(1000);
+            StateHasChanged();
+        }
     }
 }

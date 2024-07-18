@@ -6,6 +6,7 @@
 <style>
     @(_fontPicker?.ImportFontStyleText(font))
 </style>
+<MudScrollbar Width="8" Color="primary" HoverColor="secondary" />
 
 <CascadingValue Value="this" IsFixed="true">
     <MudLayout>
@@ -14,7 +15,7 @@
             <MudText Style="color: var(--mud-palette-text-primary); cursor: pointer" @onclick="@(() => NavigationManager.NavigateTo("/"))"><b>MudExtensions</b></MudText>
             <MudSpacer />
             <div class="d-flex">
-                <MudToggleIconButton @bind-Toggled="IsDarkMode" Icon="@Icons.Material.Filled.DarkMode" ToggledIcon="@Icons.Material.Filled.LightMode"/>
+                <MudToggleIconButton @bind-Toggled="IsDarkMode" Style="color: var(--mud-palette-text-primary) !important" Icon="@Icons.Material.Filled.DarkMode" ToggledIcon="@Icons.Material.Filled.LightMode"/>
                 <MudIconButton Icon="@Icons.Material.Filled.Settings" OnClick="@ToggleOpen"/>
                 @if (_open == true)
                 {

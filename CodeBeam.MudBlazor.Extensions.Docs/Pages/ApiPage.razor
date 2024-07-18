@@ -3,6 +3,7 @@
 @using System.Text.RegularExpressions
 @using System.Security.Cryptography.X509Certificates
 @using MudExtensions.Utilities
+@inject MudExtensionsDocsService DocsService
 
 <ExamplePage Title="API">
 
@@ -15,10 +16,10 @@
 
     @foreach (var component in _components)
     {
-        if (component.Name.Contains(_searchString ?? string.Empty, StringComparison.CurrentCultureIgnoreCase))
+        if (component?.Title?.Contains(_searchString ?? string.Empty, StringComparison.CurrentCultureIgnoreCase) == true)
         {
-            <ExampleCard Title="@($"Api - {component.Name.Replace("`1", null)}")" HasExpansionPanel="true">
-                <DocsApiTable RelatedType="component" />
+            <ExampleCard Title="@($"Api - {component.Title.Replace("`1", null)}")" HasExpansionPanel="true">
+                <DocsApiTable Type="component.Component" Component="component" />
             </ExampleCard>
         }
         
@@ -28,42 +29,11 @@
 
 @code {
     private string? _searchString;
+    List<MudExtensionComponentInfo> _components = new();
 
-    private Type[] _components = new Type[] 
-    { 
-        typeof(MudAnimate), 
-        typeof(MudBarcode),
-        typeof(MudChipField<string>),
-        typeof(MudCodeInput<string>),
-        typeof(MudColorProvider),
-        typeof(MudComboBox<string>),
-        typeof(MudCssManager),
-        typeof(MudCsvMapper),
-        typeof(MudDateWheelPicker),
-        typeof(MudFontPicker),
-        typeof(MudGallery),
-        typeof(MudInputStyler),
-        typeof(MudListExtended<string>),
-        typeof(MudLoading),
-        typeof(MudLoadingButton),
-        typeof(MudPage),
-        typeof(MudRangeSlider<int>),
-        typeof(MudSelectExtended<string>),
-        typeof(MudSection),
-        typeof(MudPasswordField<string>),
-        typeof(MudPopup),
-        typeof(MudScrollbar),
-        typeof(MudSignaturePad),
-        typeof(MudSpeedDial),
-        typeof(MudSplitter),
-        typeof(MudStepperExtended),
-        typeof(MudStepExtended),
-        typeof(MudSwitchM3<bool>),
-        typeof(MudTeleport),
-        typeof(MudTextFieldExtended<string>),
-        typeof(MudTransferList<string>),
-        typeof(MudTextM3),
-        typeof(MudWheel<string>),
-        typeof(MudWatch)
-    };
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _components = DocsService.GetAllComponentInfo();
+    }
 }

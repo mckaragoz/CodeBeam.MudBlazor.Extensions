@@ -1,23 +1,27 @@
 ﻿@page "/"
 @namespace MudExtensions.Docs.Pages
 @inject MudExtensionsDocsService DocsService
+@inject NavigationManager NavigationManager
 @using MudExtensions.Docs.Shared
 @using System.Runtime.Versioning
-
 @inject IScrollManager ScrollManager
 
-<MudScrollbar Width="8" Color="primary" HoverColor="secondary" />
+@if (_navigating)
+{
+    <FixedTransition Component="_searchedComponent" FadeIn="true" />
+}
+
 <MudScrollToTop>
     <MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.ArrowUpward" />
 </MudScrollToTop>
 
 <MudAnimate @ref="_animate" Selector=".card-blur" AnimationType="AnimationType.Blur" Duration="0.3" Value="0" ValueSecondary="120" />
-<MudInputStyler Selector=".search-style" BaseColor="var(--mud-palette-secondary)" />
+<MudInputStyler Selector=".search-style" BaseColor="var(--mud-palette-secondary)" Always="true" />
 
 <MudContainer Class="d-flex flex-column align-center justify-start pt-4 px-4 top-container" MaxWidth="MaxWidth.False">
     <div class="d-flex justify-center mt-2" @onmouseenter="@(() => _hover = true)" @onmouseleave="@(() => _hover = false)">
         <MudText Class="slogan" Align="Align.Center">The</MudText>
-        <MudText Class="slogan" Align="Align.Center" Color="Color.Primary">Mud</MudText>
+        <MudText Class="slogan slogan-sec slogan-ext" Align="Align.Center" Color="Color.Primary">Mu<MudText Class="slogan" Inline="true">d</MudText></MudText>
     </div>
     <MudText Class="slogan2 mt-n4" Align="Align.Center" Color="Color.Secondary">Secondary</MudText>
     <MudDivider Style="width: 24vw" />
@@ -46,11 +50,25 @@
     </div>
 
     <div class="d-flex justify-center my-4">
-        <MudTextFieldExtended T="string" @bind-Value="_searchString" @bind-Value:after="@(() => _animate.Refresh())" Class="search-style" Style="width: calc(50px + 50vw)" Placeholder="What are you looking for?" Variant="Variant.Outlined" Clearable="true">
-            <AdornmentStart>
-                <MudIcon Icon="@Icons.Material.Filled.Search" Color="Color.Secondary" />
-            </AdornmentStart>
-        </MudTextFieldExtended>
+        <MudAutocomplete @bind-Value="_searchedComponent" @bind-Value:after="NavigateSelectedComponent" SearchFunc="@ComponentSearch" Class="search-style" Style="width: calc(50px + 50vw)" MinCharacters="1"
+                         Color="Color.Secondary" Variant="Variant.Outlined" Placeholder="What are you looking for?" Clearable="true" AdornmentIcon="@Icons.Material.Filled.Search"
+                         Adornment="Adornment.Start" AdornmentColor="Color.Secondary" ToStringFunc="@(e => e?.Component?.Name.Replace("`1", null))" MaxItems="null"
+                         HelperText='Write "mud" to see all. Also can search from labels - write "utility".'>
+            <ItemTemplate>
+                <MudStack Spacing="0">
+                    @context?.Component?.Name.Replace("`1", null)
+                    <MudStack Row="true" Spacing="1">
+                        <MudChip T="string" Class="ms-n1" Text="@(context?.Usage.ToDescriptionString())" Size="Size.Small" Color="Color.Primary" />
+                        <MudChip T="string" Text="@(context?.IsUnique == true ? "Unique" : "Extended")" Size="Size.Small" Color="Color.Secondary" />
+                        @if(context?.IsMaterial3 == true)
+                        {
+                            <MudChip T="string" Text="Material 3" Size="Size.Small" Color="Color.Secondary" />
+                        }
+                        
+                    </MudStack>
+                </MudStack>
+            </ItemTemplate>
+        </MudAutocomplete>
     </div>
 
     @if (string.IsNullOrEmpty(_searchString) == true)
@@ -195,6 +213,16 @@
             letter-spacing: calc(4px + 2vw);
         }
 
+        .slogan:hover.slogan-ext:after {
+            content: "ream";
+            color: var(--mud-palette-text-primary);
+            letter-spacing: 0;
+        }
+
+        .slogan-sec {
+            content: "Mud";
+        }
+
     .slogan2 {
         color: var(--mud-palette-text-primary);
         font-size: calc(12px + 1vw);
@@ -242,8 +270,3 @@
             min-width: 180px;
     }
 </style>
-
-@code {
-
-
-}

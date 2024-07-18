@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel;
 
 namespace MudExtensions.Docs.Services
 {
@@ -12,8 +9,23 @@ namespace MudExtensions.Docs.Services
         public List<Type>? RelatedComponents { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
+        public ComponentUsage Usage { get; set; }
         public bool IsUnique { get; set; }
         public bool IsMaterial3 { get; set; }
         public bool IsUtility { get; set; }
+    }
+
+    public enum ComponentUsage
+    {
+        [Description("Layout")]
+        Layout,
+        [Description("Button")]
+        Button,
+        [Description("Input")]
+        Input,
+        [Description("Utility")]
+        Utility,
+        [Description("Display")]
+        Display,
     }
 }

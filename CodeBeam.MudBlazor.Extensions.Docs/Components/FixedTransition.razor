@@ -1,0 +1,25 @@
+﻿@inherits MudComponentBase
+@namespace MudExtensions.Docs.Components
+
+<div class="fixed fade d-flex flex-column align-center justify-center mud-theme-secondary" style="width: 100vw; height: 100vh; z-index: 9999">
+    <MudProgressCircular Style="color: white !important" Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+    <MudText Class="mt-8" Typo="Typo.h4">@Component?.Component?.Name.Replace("`1", null)</MudText>
+    <MudText Typo="Typo.h6">@Component?.Description</MudText>
+</div>
+
+@if (FadeIn)
+{
+    <MudAnimate Selector=".fade" AnimationType="AnimationType.Fade" Duration="1" Value="10" ValueSecondary="0" />
+}
+else
+{
+    <MudAnimate Selector=".fade" AnimationType="AnimationType.Fade" Duration="1" Value="0" ValueSecondary="10" AnimationFillMode="AnimationFillMode.Forwards" />
+}
+
+@code{
+    [Parameter]
+    public MudExtensionComponentInfo? Component { get; set; }
+
+    [Parameter]
+    public bool FadeIn { get; set; } = true;
+}
