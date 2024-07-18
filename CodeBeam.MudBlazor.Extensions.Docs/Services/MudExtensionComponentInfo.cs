@@ -8,6 +8,8 @@ namespace MudExtensions.Docs.Services
 {
     public class MudExtensionComponentInfo
     {
+        public Type? Component { get; set; }
+        public List<Type>? RelatedComponents { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public bool IsUnique { get; set; }

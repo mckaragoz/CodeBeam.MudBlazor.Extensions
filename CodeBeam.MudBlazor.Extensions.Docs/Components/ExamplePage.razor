@@ -32,17 +32,24 @@
                 </MudTooltip>
             }
         </div>
-        <MudText Class="ms-2 ms-sm-0" Typo="Typo.h6">@_component?.Description</MudText>
+        <MudText Class="ms-2 ms-sm-0 mt-2" Typo="Typo.h6">@_component?.Description</MudText>
+        @if (_component?.RelatedComponents != null)
+        {
+            <MudText Color="Color.Secondary">Related Components: @string.Join(", ", _component.RelatedComponents.Select(x => x.Name.Replace("`1", "")))</MudText>
+        }
+        <MudText></MudText>
         @ChildContent
+
+        <a id="api" class="my-16"><MudDivider Class="my-16"></MudDivider></a>
+        <ExampleCard Title="@($"Api - {Component?.Name.Replace("`1", "")}")" ComponentName="@Component?.Name.Replace("Mud", "")" AliasName="api" ShowCodeSection="false">
+            <DocsApiTable Type="Component" Component="_component" />
+        </ExampleCard>
     </MudContainer>
 </CascadingValue>
 
 @code{
     [Parameter]
-    public string? Title { get; set; }
-
-    [Parameter]
-    public string? Description { get; set; }
+    public Type? Component { get; set; }
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -52,6 +59,6 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        _component = DocsService.GetAllComponentInfo().FirstOrDefault(x => x.Title == Title);
+        _component = DocsService.GetAllComponentInfo().FirstOrDefault(x => x?.Title == Component?.Name.Replace("`1", ""));
     }
 }

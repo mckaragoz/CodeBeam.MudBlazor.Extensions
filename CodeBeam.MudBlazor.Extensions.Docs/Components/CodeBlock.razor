@@ -1,7 +1,7 @@
 ﻿@inherits MudComponentBase
 @namespace MudExtensions.Docs.Components
 
-<MudText HtmlTag="span" Class="px-2" Typo="Typo.body2" Style="background-color: #ff4081; color: white; border-radius: 20px">@ChildContent</MudText>
+<MudText HtmlTag="span" Class="mx-1 px-2 py-1" Typo="Typo.body2" Style="@($"background:{Colors.Pink.Lighten5}; border-radius: 12px")">@ChildContent</MudText>
 
 @code{
     [Parameter]

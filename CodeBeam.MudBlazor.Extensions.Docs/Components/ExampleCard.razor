@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject IJsApiService JSApiService
 
-<a id="@AliasName" class="my-16"><MudDivider Class="my-16"></MudDivider></a>
+<a id="@(AliasName ?? Title?.Replace(" ", "-").Replace("&", "").ToLowerInvariant())" class="my-16"><MudDivider Class="my-16"></MudDivider></a>
 
 @if (HasExpansionPanel)
 {
@@ -124,7 +124,7 @@ else
 
     private async Task CopyExampleLink()
     {
-        await JSApiService.CopyToClipboardAsync(NavigationManager.BaseUri + "mud" + ComponentName?.ToLower() + "#" + AliasName);
+        await JSApiService.CopyToClipboardAsync(NavigationManager.BaseUri + "mud" + ComponentName?.ToLower().Replace("`1", "") + "#" + (AliasName ?? Title?.Replace(" ", "-").Replace("&", "").ToLowerInvariant()));
         Snackbar.Add("Example link copied.", Severity.Info);
     }
 

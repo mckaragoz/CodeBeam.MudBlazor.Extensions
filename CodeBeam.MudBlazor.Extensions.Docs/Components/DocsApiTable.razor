@@ -2,7 +2,7 @@
 @using System.Text.RegularExpressions
 
 <MudText Class="my-2" Color="Color.Secondary" Typo="Typo.h6">Parameters</MudText>
-<MudTable Items="@(RelatedType?.GetProperties().Where(x => x.Name != "FieldId" && x.Name != "UserAttributes").OrderBy(x => x.Name).ToList())">
+<MudTable Items="@(Type?.GetProperties().Where(x => x.PropertyType.Name.Contains("EventCallback") == false && x.Name != "FieldId" && x.Name != "UserAttributes").OrderBy(x => x.Name).ToList())" Elevation="0" Hover="true" Dense="true">
     <HeaderContent>
         <MudTh>Name</MudTh>
         <MudTh>Type</MudTh>
@@ -10,38 +10,64 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">@context.Name</MudTd>
-            <MudTd DataLabel="Type">@context.PropertyType.Name</MudTd>
+            <MudTd DataLabel="Type">@context.PropertyType.Name.Replace("`1", "")</MudTd>
             <MudTd DataLabel="Default">
                 @if (true)
             {
-                object? instance = Activator.CreateInstance(RelatedType ?? typeof(string));
+                object? instance = Activator.CreateInstance(Type ?? typeof(string));
                 <MudText Typo="Typo.body2">@(context.GetValue(instance)?.ToString() ?? "null")</MudText>
             }
         </MudTd>
     </RowTemplate>
 </MudTable>
 
-<MudText Class="my-2" Color="Color.Secondary" Typo="Typo.h6">Methods</MudText>
-<MudTable Items="@(RelatedType?.GetMethods().Where(x => x.Name != "SetParametersAsync" && Regex.IsMatch(x.Name[0].ToString(), "[A-Z]")).OrderBy(x => x.Name).ToList())">
+<MudText Class="mt-8 mb-2" Color="Color.Secondary" Typo="Typo.h6">Events</MudText>
+<MudTable Items="@(Type?.GetProperties().Where(x => x.PropertyType.Name.Contains("EventCallback")).OrderBy(x => x.Name).ToList())" Elevation="0" Hover="true" Dense="true">
     <HeaderContent>
         <MudTh>Name</MudTh>
         <MudTh>Type</MudTh>
-        <MudTh>Default</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">@context.Name</MudTd>
-            <MudTd DataLabel="Type">@context.ReturnType.Name</MudTd>
-            <MudTd DataLabel="Default">
-                @if (true)
-            {
-                @* MudStepper instance = new(); *@
-                @*<MudText Typo="Typo.body2">@(context(instance)?.ToString() ?? "null")</MudText>*@
-            }
-        </MudTd>
+        <MudTd DataLabel="Type">@context.PropertyType.Name.Replace("`1", "")</MudTd>
     </RowTemplate>
+    <NoRecordsContent>
+        No items found.
+    </NoRecordsContent>
 </MudTable>
+
+<MudText Class="mt-8 mb-2" Color="Color.Secondary" Typo="Typo.h6">Methods</MudText>
+<MudTable Items="@(Type?.GetMethods().Where(x => _excludedMethods.Contains(x.Name) == false && Regex.IsMatch(x.Name[0].ToString(), "[A-Z]")).OrderBy(x => x.Name).ToList())" Elevation="0" Hover="true" Dense="true">
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Type</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Type">@context.ReturnType.Name.Replace("`1", "")</MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        No items found.
+    </NoRecordsContent>
+</MudTable>
+
+@if (Component?.RelatedComponents != null)
+{
+    foreach (var comp in Component.RelatedComponents)
+    {
+        <ExampleCard Title="@($"Api - {comp.Name.Replace("`1", "")}")" ComponentName="@Type?.Name.Replace("Mud", "")" AliasName="api" ShowCodeSection="false">
+            <DocsApiTable Type="comp" />
+        </ExampleCard>
+    }
+}
 
 @code{
     [Parameter]
-    public Type? RelatedType { get; set; }
+    public Type? Type { get; set; }
+
+    [Parameter]
+    public MudExtensionComponentInfo? Component { get; set; }
+
+    List<string> _excludedMethods = new()
+    { "SetParametersAsync", "Equals", "GetHashCode", "GetType", "ToString"};
 }
