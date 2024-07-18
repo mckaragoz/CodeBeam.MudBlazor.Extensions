@@ -1,26 +1,44 @@
 ﻿@inherits MudComponentBase
 @namespace MudExtensions.Docs.Components
 
-<MudCard Class="component-card pa-0" Elevation="4" @onclick="NavigateComponentPage">
+<MudCard Class="component-card pa-0" Style="width: 240px; min-height: 240px" Elevation="4" @onclick="OnClick">
     <MudCardHeader Class="component-card-header">
         <MudText Typo="Typo.h6" Color="Color.Inherit">@Title</MudText>
         <MudSpacer />
         <MudIcon Class="icon-class" Icon="@Icons.Custom.Brands.MudBlazor" />
     </MudCardHeader>
     <MudCardContent>
-        <div class="d-flex flex-column align-center" style="min-height: 100px">
+        <MudStack>
+            <MudStack Spacing="2" Row="true" Wrap="Wrap.Wrap" AlignItems="AlignItems.Center">
+                @* <MudTooltip Text="The component usage." Delay="300" Color="Color.Secondary">
+                    <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Size="Size.Small">@Component?.Usage.ToDescriptionString()</MudChip>
+                </MudTooltip> *@
+
+                @if (Component?.IsUnique == false)
+                {
+                    <MudTooltip Text="Core library has a similar component." Delay="300" Color="Color.Secondary" Arrow="true">
+                        <MudChip T="string" Class="ms-n1" Color="Color.Secondary" Variant="Variant.Filled" Size="Size.Small">Extended Component</MudChip>
+                    </MudTooltip>
+                }
+                else
+                {
+                    <MudTooltip Text="Core library doesn't have a similar component." Delay="300" Color="Color.Primary" Arrow="true">
+                        <MudChip T="string" Class="ms-n1" Color="Color.Primary" Variant="Variant.Filled" Size="Size.Small">Unique Component</MudChip>
+                    </MudTooltip>
+                }
+
+                @if (Component?.IsMaterial3 == true)
+                {
+                    <MudTooltip Text="Conforms to Material 3 specifications." Delay="300" Color="Color.Success" Arrow="true">
+                        <MudChip T="string" Color="Color.Success" Variant="Variant.Filled" Size="Size.Small">Material 3</MudChip>
+                    </MudTooltip>
+                }
+            </MudStack>
             <MudText>@Description</MudText>
             @ChildContent
-        </div>
-        
+        </MudStack>
+            
     </MudCardContent>
-    <MudCardActions>
-        @if (ShowActionButton)
-        {
-            <MudSpacer />
-            <MudButton Variant="Variant.Outlined" Color="Color.Inherit" OnClick="NavigateComponentPage">Go To Component</MudButton>
-        }
-    </MudCardActions>
 </MudCard>
 
 <style>

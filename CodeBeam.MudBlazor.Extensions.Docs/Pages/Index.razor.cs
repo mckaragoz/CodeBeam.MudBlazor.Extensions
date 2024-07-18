@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using MudExtensions.Docs.Services;
 using MudExtensions.Docs.Shared;
 using static MudBlazor.Colors;
@@ -64,6 +65,42 @@ namespace MudExtensions.Docs.Pages
             {
                 _navigating = false;
             }
+        }
+
+        private async Task HandleCompCardClick(MudExtensionComponentInfo component)
+        {
+            if (component == null)
+            {
+                return;
+            }
+            _searchedComponent = component;
+            await NavigateSelectedComponent();
+        }
+
+        private string GetSectionIcon(ComponentUsage componentUsage)
+        {
+            if (componentUsage == ComponentUsage.Layout)
+            {
+                return Icons.Material.Filled.Dashboard;
+            }
+            else if (componentUsage == ComponentUsage.Button)
+            {
+                return Icons.Material.Filled.Dataset;
+            }
+            else if (componentUsage == ComponentUsage.Input)
+            {
+                return Icons.Material.Filled.AppRegistration;
+            }
+            else if (componentUsage == ComponentUsage.Display)
+            {
+                return Icons.Material.Filled.Ballot;
+            }
+            else if (componentUsage == ComponentUsage.Utility)
+            {
+                return Icons.Material.Filled.AutoAwesome;
+            }
+
+            return Icons.Material.Filled.Dashboard;
         }
 
     }

@@ -60,142 +60,98 @@
                     <MudStack Row="true" Spacing="1">
                         <MudChip T="string" Class="ms-n1" Text="@(context?.Usage.ToDescriptionString())" Size="Size.Small" Color="Color.Primary" />
                         <MudChip T="string" Text="@(context?.IsUnique == true ? "Unique" : "Extended")" Size="Size.Small" Color="Color.Secondary" />
-                        @if(context?.IsMaterial3 == true)
+                        @if (context?.IsMaterial3 == true)
                         {
                             <MudChip T="string" Text="Material 3" Size="Size.Small" Color="Color.Secondary" />
                         }
-                        
+
                     </MudStack>
                 </MudStack>
             </ItemTemplate>
+            <NoItemsTemplate>
+                Nothing found. Try something else?
+            </NoItemsTemplate>
         </MudAutocomplete>
     </div>
 
-    @if (string.IsNullOrEmpty(_searchString) == true)
-    {
-        <div class="d-flex align-baseline gap-2 justify-center mt-16 mb-8 card-blur">
-            <MudGrid Class="justify-center">
-                <MudItem xs="12" sm="6" md="4" lg="3">
-                    <MudCard Elevation="0">
-                        <MudCardContent>
-                            <MudStack>
-                                <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.Webhook" Color="Color.Secondary" />
-                                <MudText Typo="Typo.h6" Color="Color.Secondary">OpenSource</MudText>
-                                <MudText Class="mt-4">MudExtensions is free forever on personal and commercial use.</MudText>
-                            </MudStack>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-
-                <MudItem xs="12" sm="6" md="4" lg="3">
-                    <MudCard Elevation="0">
-                        <MudCardContent>
-                            <MudStack>
-                                <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.Widgets" Color="Color.Secondary" />
-                                <MudText Typo="Typo.h6" Color="Color.Secondary">Component & Utility</MudText>
-                                <MudText Class="mt-4">MudExtensions has 30+ components and utilities from the core library contributors. Suits perfectly with MudBlazor core library.</MudText>
-                            </MudStack>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-
-                <MudItem xs="12" sm="6" md="4" lg="3">
-                    <MudCard Elevation="0">
-                        <MudCardContent>
-                            <MudStack>
-                                <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.VerticalSplit" Color="Color.Secondary" />
-                                <MudText Typo="Typo.h6" Color="Color.Secondary">Unique & Extended</MudText>
-                                <MudText Class="mt-4">MudExtensions has unique components that has familiar Mud design. Library also has extended components that adds additional features on current Mud Core components. (While keeping all existing features)</MudText>
-                            </MudStack>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-            </MudGrid>
-        </div>
-
-        <div class="d-flex justify-center mt-12">
-            <MudIconButton Icon="@Icons.Material.Filled.ArrowDownward" Style="height: 52px;" Color="Color.Secondary" Variant="Variant.Outlined" OnClick="@(async() => await ScrollManager.ScrollToAsync("cont", 0, 1600, ScrollBehavior.Smooth))" />
-        </div>
-    }
-    else
-    {
-        if (NothingFound())
-        {
-            <MudText Class="card-blur">Nothing Found. Try Something Else?</MudText>
-        }
+    <div class="d-flex align-baseline gap-2 justify-center mt-16 mb-8 card-blur">
         <MudGrid Class="justify-center">
-            @foreach (var comp in _components.Where(x => x.IsUnique == false))
-            {
-                if (string.IsNullOrEmpty(_searchString) || comp.Title?.Contains(_searchString, StringComparison.CurrentCultureIgnoreCase) == true)
-                {
-                    <MudItem Class="card-blur" xs="12" sm="6" md="4" lg="3" xl="2">
-                        <ComponentCard Title="@comp.Title"
-                           Description="@comp.Description" />
-                    </MudItem>
-                }
-            }
-
-            @foreach (var comp in _components.Where(x => x.IsUnique == true))
-            {
-                if (string.IsNullOrEmpty(_searchString) || comp.Title?.Contains(_searchString, StringComparison.CurrentCultureIgnoreCase) == true)
-                {
-                    <MudItem Class="card-blur" xs="12" sm="6" md="4" lg="3" xl="2">
-                        <ComponentCard Title="@comp.Title"
-                           Description="@comp.Description" />
-                    </MudItem>
-                }
-            }
-        </MudGrid>
-    }
-
-    @if (string.IsNullOrEmpty(_searchString))
-    {
-        <div class="mt-16 mb-8">
-            <MudText Color="Color.Secondary" Typo="Typo.h6" Align="Align.Center"><b>Extended Components</b></MudText>
-            <MudText Color="Color.Secondary" Typo="Typo.body1" Align="Align.Center">Known Mud Components with extended features</MudText>
-        </div>
-
-        <MudGrid Class="justify-center">
-            @foreach (var comp in _components.Where(x => x.IsUnique == false))
-            {
-                <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                    <ComponentCard Title="@comp.Title"
-                           Description="@comp.Description" />
-                </MudItem>
-            }
-        </MudGrid>
-
-        <div class="mt-16 mb-8">
-            <MudText Color="Color.Secondary" Typo="Typo.h6" Align="Align.Center"><b>Unique Components</b></MudText>
-            <MudText Color="Color.Secondary" Typo="Typo.body1" Align="Align.Center">Extension components that written from scratch</MudText>
-        </div>
-
-        <MudGrid>
-            @foreach (var comp in _components.Where(x => x.IsUnique == true))
-            {
-
-                <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                    <ComponentCard Title="@comp.Title"
-                           Description="@comp.Description" />
-                </MudItem>
-
-            }
-
-            <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                <ComponentCard Title="API"
-                           Description="A basic API list for all components." />
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudCard Elevation="0">
+                    <MudCardContent>
+                        <MudStack>
+                            <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.Webhook" Color="Color.Secondary" />
+                            <MudText Typo="Typo.h6" Color="Color.Secondary">OpenSource</MudText>
+                            <MudText Class="mt-4">MudExtensions is free forever on personal and commercial use.</MudText>
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
             </MudItem>
 
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudCard Elevation="0">
+                    <MudCardContent>
+                        <MudStack>
+                            <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.Widgets" Color="Color.Secondary" />
+                            <MudText Typo="Typo.h6" Color="Color.Secondary">Component & Utility</MudText>
+                            <MudText Class="mt-4">MudExtensions has 30+ components and utilities from the core library contributors. Suits perfectly with MudBlazor core library.</MudText>
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudCard Elevation="0">
+                    <MudCardContent>
+                        <MudStack>
+                            <MudIcon Style="width: 80px; height: 80px" Icon="@Icons.Material.Filled.VerticalSplit" Color="Color.Secondary" />
+                            <MudText Typo="Typo.h6" Color="Color.Secondary">Unique & Extended</MudText>
+                            <MudText Class="mt-4">MudExtensions has unique components that has familiar Mud design. Library also has extended components that adds additional features on current Mud Core components. (While keeping all existing features)</MudText>
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
         </MudGrid>
-    }
+    </div>
+
+
+    <MudGrid Spacing="8">
+        @foreach (var group in Enum.GetValues<ComponentUsage>())
+        {
+            <MudItem xs="12">
+                <MudCard Class="py-8" Style="background: var(--mud-palette-background-gray)" Elevation="0">
+                    <MudCardHeader>
+                        <MudStack Class="mud-width-full" Row="true" Justify="Justify.Center" AlignItems="AlignItems.Center">
+                            <MudIcon Icon="@GetSectionIcon(group)" Size="Size.Large" />
+                            <MudText Typo="Typo.h4" Color="Color.Secondary">@group.ToDescriptionString()</MudText>
+                        </MudStack>
+
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudStack Spacing="8" Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Wrap="Wrap.Wrap">
+                            @foreach (var comp in _components.Where(x => x.Usage == group))
+                            {
+                                <ComponentCard Component="comp" Title="@comp.Title" Description="@comp.Description" OnClick="@(async() => await HandleCompCardClick(comp))" />
+                            }
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+
+    <MudStack Class="mt-4" Justify="Justify.Center">
+        <ComponentCard Title="API"
+                       Description="A basic API list for all components." />
+    </MudStack>
 
     <MudContainer Class="mt-16" MaxWidth="MaxWidth.Large">
         <MudToolBar Gutters="false" Dense="true">
             <MudText Typo="Typo.body1"><b>OpenSource © 2022-@DateTime.Now.Year CodeBeam.</b> @Version</MudText>
             <MudSpacer />
-                <MudText Typo="Typo.body1">Running on <b>.NET</b> @Environment.Version.ToString()</MudText>
-            </MudToolBar>
-        </MudContainer>
+            <MudText Typo="Typo.body1">Running on <b>.NET</b> @Environment.Version.ToString()</MudText>
+        </MudToolBar>
+    </MudContainer>
 </MudContainer>
 
 <style>
@@ -213,15 +169,15 @@
             letter-spacing: calc(4px + 2vw);
         }
 
-        .slogan:hover.slogan-ext:after {
-            content: "ream";
-            color: var(--mud-palette-text-primary);
-            letter-spacing: 0;
-        }
+            .slogan:hover.slogan-ext:after {
+                content: "ream";
+                color: var(--mud-palette-text-primary);
+                letter-spacing: 0;
+            }
 
-        .slogan-sec {
-            content: "Mud";
-        }
+    .slogan-sec {
+        content: "Mud";
+    }
 
     .slogan2 {
         color: var(--mud-palette-text-primary);
@@ -263,10 +219,10 @@
         max-width: 94vw;
     }
 
-    .sub-slogan-container:hover {
+        .sub-slogan-container:hover {
             border-left-width: 4px;
             border-right-width: 4px;
             width: 20vw;
             min-width: 180px;
-    }
+        }
 </style>

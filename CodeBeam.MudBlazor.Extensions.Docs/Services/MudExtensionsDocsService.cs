@@ -1,9 +1,4 @@
 ﻿using MudExtensions.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MudExtensions.Docs.Services
 {
@@ -35,7 +30,7 @@ namespace MudExtensions.Docs.Services
             new MudExtensionComponentInfo() {Title = "MudSpeedDial", Component = typeof(MudSpeedDial), Usage = ComponentUsage.Button, IsUnique = true, Description = "A resizeable content splitter."},
             new MudExtensionComponentInfo() {Title = "MudSplitter", Component = typeof(MudSplitter), Usage = ComponentUsage.Layout, IsUnique = true, Description = "A slider with range capabilities, set upper and lower values."},
             new MudExtensionComponentInfo() {Title = "MudStepperExtended", Component = typeof(MudStepperExtended), Usage = ComponentUsage.Display, RelatedComponents = new List<Type>() {typeof(MudStepExtended)}, IsUnique = false, Description = "A wizard-like steps to control the flow with rich options."},
-            new MudExtensionComponentInfo() {Title = "MudSwitchM3", Component = typeof(MudSwitchM3<bool>), Usage = ComponentUsage.Input, IsUnique = true, IsMaterial3 = true, Description = "Material 3 switch component that has all MudBlazor features."},
+            new MudExtensionComponentInfo() {Title = "MudSwitchM3", Component = typeof(MudSwitchM3<bool>), Usage = ComponentUsage.Input, IsUnique = true, IsMaterial3 = true, Description = "Material 3 switch component that has all MudSwitch features."},
             new MudExtensionComponentInfo() {Title = "MudTeleport", Component = typeof(MudTeleport), Usage = ComponentUsage.Layout, IsUnique = true, Description = "Teleport the content to the specified parent and redesign the DOM hierarchy."},
             new MudExtensionComponentInfo() {Title = "MudTextFieldExtended", Component = typeof(MudTextFieldExtended<string>), Usage = ComponentUsage.Input, IsUnique = false, Description = "The extended MudTextField component with richer features."},
             new MudExtensionComponentInfo() {Title = "MudTextM3", Component = typeof(MudTextM3), Usage = ComponentUsage.Display, IsUnique = true, IsMaterial3 = true, Description = "Material 3 typography."},

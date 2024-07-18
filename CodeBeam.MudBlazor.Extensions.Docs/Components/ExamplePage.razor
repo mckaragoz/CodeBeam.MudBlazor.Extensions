@@ -2,7 +2,7 @@
 @namespace MudExtensions.Docs.Components
 @inject MudExtensionsDocsService DocsService
 
-@if (_firstRender == false)
+@if (_firstRender == false && _component != null)
 {
     <FixedTransition Component="_component" FadeIn="false" />
 }
@@ -12,9 +12,12 @@
         <div class="pt-6 pb-2 d-flex flex-wrap align-center gap-4">
             <MudIconButton Class="ms-2 ms-sm-0" Icon="@Icons.Material.Filled.ArrowBack" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@(() => NavigationManager.NavigateTo("/"))" />
             <MudText Typo="Typo.h4" Color="Color.Secondary">@(_component?.Title ?? Title)</MudText>
-            <MudTooltip Text="Source Code" Delay="300" Color="Color.Secondary">
-                <MudIconButton Icon="@Icons.Material.Filled.Code" Href="@($"https://github.com/CodeBeamOrg/CodeBeam.MudBlazor.Extensions/tree/dev/CodeBeam.MudBlazor.Extensions/Components/{_component?.Title?.Replace("Mud", null)}")" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" />
-            </MudTooltip>
+            @if (_component != null)
+            {
+                <MudTooltip Text="Source Code" Delay="300" Color="Color.Secondary">
+                    <MudIconButton Icon="@Icons.Material.Filled.Code" Href="@($"https://github.com/CodeBeamOrg/CodeBeam.MudBlazor.Extensions/tree/dev/CodeBeam.MudBlazor.Extensions/Components/{_component?.Title?.Replace("Mud", null)}")" Target="_blank" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small" />
+                </MudTooltip>
+            }
             <MudSpacer />
             @if (_component?.IsUtility == true)
             {

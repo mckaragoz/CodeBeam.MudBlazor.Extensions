@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MudExtensions.Docs.Services;
 
 namespace MudExtensions.Docs.Components
 {
@@ -19,7 +20,10 @@ namespace MudExtensions.Docs.Components
         public RenderFragment? ChildContent { get; set; }
 
         [Parameter]
-        public bool ShowActionButton { get; set; } = true;
+        public EventCallback OnClick { get; set; }
+
+        [Parameter]
+        public MudExtensionComponentInfo? Component { get; set; }
 
         [Parameter]
         public bool NavigateToComponentPage { get; set; } = true;

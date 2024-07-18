@@ -16,7 +16,7 @@
             <MudSpacer />
             <div class="d-flex">
                 <MudToggleIconButton @bind-Toggled="IsDarkMode" Style="color: var(--mud-palette-text-primary) !important" Icon="@Icons.Material.Filled.DarkMode" ToggledIcon="@Icons.Material.Filled.LightMode"/>
-                <MudIconButton Icon="@Icons.Material.Filled.Settings" OnClick="@ToggleOpen"/>
+                <MudIconButton Style="color: var(--mud-palette-text-primary) !important" Icon="@Icons.Material.Filled.Settings" OnClick="@ToggleOpen"/>
                 @if (_open == true)
                 {
                     <MudPopover Class="pa-4" Open="_open" AnchorOrigin="Origin.TopLeft" TransformOrigin="Origin.BottomRight" Style="width: 320px; height: 400px">
