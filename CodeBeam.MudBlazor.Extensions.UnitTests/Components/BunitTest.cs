@@ -5,7 +5,9 @@
 using System;
 using System.Threading.Tasks;
 using Bunit;
+using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
+using MudExtensions.Docs.Services;
 using MudExtensions.Services;
 
 namespace MudExtensions.UnitTests.Components
@@ -19,19 +21,14 @@ namespace MudExtensions.UnitTests.Components
         {
             Context = new();
             Context.JSInterop.Mode = JSRuntimeMode.Loose;
-            //Context.Services.AddTransient<IScrollManager, MockScrollManager>();
-            //Context.Services.AddSingleton<IScrollManagerExtended, ScrollManagerExtended>();
-            //Context.Services.AddTransient<IKeyInterceptorFactory, MockKeyInterceptorServiceFactory>();
-            //Context.Services.AddSingleton<IMudPopoverService, MockPopoverService>();
-            //Context.Services.AddSingleton<ISnackbar, SnackbarService>();
-            //Context.Services.AddSingleton<IJsApiService, JsApiService>();
             Context.Services.AddMudServices(options =>
             {
                 options.SnackbarConfiguration.ShowTransitionDuration = 0;
                 options.SnackbarConfiguration.HideTransitionDuration = 0;
+                options.PopoverOptions.CheckForPopoverProvider = false;
             });
             Context.Services.AddMudExtensions();
-            //Context.AddTestServices();
+            Context.Services.AddScoped<MudExtensionsDocsService>();
         }
 
         [TearDown]
