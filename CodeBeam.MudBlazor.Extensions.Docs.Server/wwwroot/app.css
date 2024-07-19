@@ -15,3 +15,35 @@
 .background-gradient-animation {
     animation: background-gradient 18s ease infinite;
 }
+
+@keyframes background-animation {
+    0% {
+        background-position: 0%;
+    }
+
+    50% {
+        background-position: 50%;
+    }
+
+    100% {
+        background-position: 100%;
+    }
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.animated-background {
+    animation: 1.5s 0.5s background-animation forwards, fade 1s;
+}
+
+.animated-background-reverse {
+    animation: 1s background-animation reverse, fade 1s reverse;
+}

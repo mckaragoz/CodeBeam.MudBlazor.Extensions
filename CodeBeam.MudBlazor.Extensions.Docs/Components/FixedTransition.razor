@@ -1,7 +1,7 @@
 ﻿@inherits MudComponentBase
 @namespace MudExtensions.Docs.Components
 
-<div class="fixed fade d-flex flex-column align-center justify-center mud-theme-secondary" style="width: 100vw; height: 100vh; z-index: 9999">
+<div class="fixed @(FadeIn ? "animated-background" : "animated-background-reverse") d-flex flex-column align-center justify-center mud-theme-secondary" style="width: 100vw; height: 100vh; z-index: 9999; background: linear-gradient(45deg, #E73C7E, #23A6D5, #E73C7E); background-size: 400%;">
     <MudProgressCircular Style="color: white !important" Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
     <MudText Class="mt-8" Typo="Typo.h4">@Component?.Component?.Name.Replace("`1", null)</MudText>
     <MudText Typo="Typo.h6">@Component?.Description</MudText>

@@ -19,6 +19,9 @@
             }
         </MudTd>
     </RowTemplate>
+    <NoRecordsContent>
+        No specific items.
+    </NoRecordsContent>
 </MudTable>
 
 <MudText Class="mt-8 mb-2" Color="Color.Secondary" Typo="Typo.h6">Events</MudText>
@@ -32,7 +35,7 @@
         <MudTd DataLabel="Type">@context.PropertyType.Name.Replace("`1", "")</MudTd>
     </RowTemplate>
     <NoRecordsContent>
-        No items found.
+        No specific items.
     </NoRecordsContent>
 </MudTable>
 
@@ -47,7 +50,7 @@
         <MudTd DataLabel="Type">@context.ReturnType.Name.Replace("`1", "")</MudTd>
     </RowTemplate>
     <NoRecordsContent>
-        No items found.
+        No specific items.
     </NoRecordsContent>
 </MudTable>
 

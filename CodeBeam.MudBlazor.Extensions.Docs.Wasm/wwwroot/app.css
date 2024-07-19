@@ -46,14 +46,47 @@
     font-weight: bold;
     inset: calc(40vh + 3.25rem) 0 auto 0.2rem;
 }
-.backgroundLoadColor{
-    background: linear-gradient(-45deg,
-    #424242ff,
-    #594ae2ff,
-    #424242ff,
-    #ff4081ff,
-    #424242ff);
+.backgroundLoadColor {
+    background: linear-gradient(45deg, #E73C7E, #23A6D5, #E73C7E);
+    /*background-size: 400%;*/
 }
+
 .loading-progress-text:after {
-    content: var(--blazor-load-percentage-text, "Loading");
+    content: var(--blazor-load-percentage-text, "CodeBeam");
+}
+
+@keyframes background-animation {
+    0% {
+        background-position: 0%;
+    }
+
+    50% {
+        background-position: 50%;
+    }
+
+    100% {
+        background-position: 100%;
+    }
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.animated-background {
+    animation: 1.5s 0.5s background-animation forwards, fade 1s;
+}
+
+.animated-background-reverse {
+    animation: 1s background-animation reverse, fade 1s reverse;
+}
+
+.animated-background-infinite {
+    animation: 1s background-animation infinite;
 }

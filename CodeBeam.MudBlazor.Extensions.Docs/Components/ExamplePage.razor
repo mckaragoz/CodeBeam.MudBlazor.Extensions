@@ -21,25 +21,25 @@
             <MudSpacer />
             @if (_component?.IsUtility == true)
             {
-                <MudChip T="string" Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">Utility</MudChip>
+                <MudChip T="string" Class="cursor-default" Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">Utility</MudChip>
             }
             else if(_component?.IsUnique == false)
             {
                 <MudTooltip Text="Core library has a similar component." Delay="300" Color="Color.Secondary" Arrow="true">
-                    <MudChip T="string" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">Extended Component</MudChip>
+                    <MudChip T="string" Class="cursor-default" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">Extended Component</MudChip>
                 </MudTooltip>
             }
             else
             {
                 <MudTooltip Text="Core library doesn't have a similar component." Delay="300" Color="Color.Secondary" Arrow="true">
-                    <MudChip T="string" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">Unique Component</MudChip>
+                    <MudChip T="string" Class="cursor-default" Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Small">Unique Component</MudChip>
                 </MudTooltip>
             }
 
             @if (_component?.IsMaterial3 == true)
             {
                 <MudTooltip Text="Conforms to Material 3 specifications." Delay="300" Color="Color.Info" Arrow="true">
-                    <MudChip T="string" Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">Material 3</MudChip>
+                    <MudChip T="string" Class="cursor-default" Color="Color.Info" Variant="Variant.Outlined" Size="Size.Small">Material 3</MudChip>
                 </MudTooltip>
             }
         </div>
