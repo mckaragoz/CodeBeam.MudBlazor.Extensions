@@ -44,6 +44,12 @@ namespace MudExtensions
         public EventCallback<List<string>> ValuesChanged { get; set; }
 
         /// <summary>
+        /// If false, pressing delimeter key has no effect if the value is already in values. Default is false.
+        /// </summary>
+        [Parameter]
+        public bool AllowSameValues { get; set; }
+
+        /// <summary>
         /// Determines chip size with small, medium or large values.
         /// </summary>
         [Parameter]
@@ -53,7 +59,7 @@ namespace MudExtensions
         /// The char that created a new chip with current value.
         /// </summary>
         [Parameter]
-        public char? Delimiter { get; set; }
+        public string? Delimiter { get; set; } = " ";
 
         /// <summary>
         /// CSS classes of the chips, seperated by space.
@@ -110,9 +116,17 @@ namespace MudExtensions
         /// <returns></returns>
         protected async Task HandleKeyDown(KeyboardEventArgs args)
         {
-            var result = args.Code == "Space" ? " " : args.Key;
-            if (result == Delimiter.ToString() && _internalValue != null)
+            var result = args.Key;
+            if (result.Equals(Delimiter, StringComparison.InvariantCultureIgnoreCase) && _internalValue != null)
             {
+                if (AllowSameValues == false && Values?.Contains(Converter.Set(_internalValue)) == true)
+                {
+                    await Task.Delay(10);
+                    _internalValue = Converter.Get(Converter.Set(_internalValue)?.Replace(result, null).ToString());
+                    await SetValueAsync(_internalValue);
+                    StateHasChanged();
+                    return;
+                }
                 await SetChips();
                 StateHasChanged();
             }
