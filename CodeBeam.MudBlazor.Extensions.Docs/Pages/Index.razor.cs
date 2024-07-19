@@ -15,24 +15,12 @@ namespace MudExtensions.Docs.Pages
         MudExtensionComponentInfo? _searchedComponent;
         MudAnimate _animate = new();
 
-        bool _hover = false;
         bool _navigating = false;
-        string? _searchString;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
             _components = DocsService.GetAllComponentInfo();
-        }
-
-        private bool NothingFound()
-        {
-            if (_components.Select(x => x.Title).ToList().Any(x => x.Contains(_searchString ?? "", StringComparison.CurrentCultureIgnoreCase)))
-            {
-                return false;
-            }
-
-            return true;
         }
 
         private string Version

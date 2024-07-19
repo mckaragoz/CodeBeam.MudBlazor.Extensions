@@ -101,6 +101,7 @@ else
         var ass = System.Reflection.Assembly.GetExecutingAssembly();
         var names = ass.GetManifestResourceNames();
 
+        _lines = new();
         string path = $@"MudExtensions.Docs.Pages.Components.{ComponentName}.Examples.{ExampleName}.razor";
         var resourceStream = ass.GetManifestResourceStream(path);
         if (resourceStream != null)

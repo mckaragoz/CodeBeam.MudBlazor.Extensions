@@ -4,7 +4,7 @@
     <MudItem xs="12" sm="8" Class="d-flex align-center justify-center">
         <MudPaper Width="320px">
             <MudListExtended T="string" Clickable="true" MultiSelection="true" MultiSelectionAlign="_listAlign"
-                     MultiSelectionComponent="_listSelectionComponent" DisableSelectedItemStyle="_disableSelectedItemStyle">
+                     MultiSelectionComponent="_listSelectionComponent" EnableSelectedItemStyle="_enableSelectedItemStyle">
                 <ChildContent>
                     <MudListItemExtended Value="@("Wifi")" Text="Wifi" Icon="@Icons.Material.Filled.Wifi" />
                     <MudListItemExtended Value="@("Bluetooth")" Text="Bluetooth" Icon="@Icons.Material.Filled.Bluetooth" />
@@ -17,8 +17,8 @@
     </MudItem>
 
     <MudItem xs="12" sm="4">
-        <MudCheckBox @ref="_checkboxAlign" T="bool" ValueChanged="AlignChanged" Color="Color.Primary" Label="Align End" />
-        <MudCheckBox @bind-Value="_disableSelectedItemStyle" Color="Color.Primary" Label="Disable Selected Item Style" />
+        <MudCheckBox @ref="_checkboxAlign" T="bool" ValueChanged="AlignChanged" Color="Color.Secondary" Label="Align End" />
+        <MudCheckBox @bind-Value="_enableSelectedItemStyle" Color="Color.Secondary" Label="Enable Selected Item Style" />
         <MudSelect T="MultiSelectionComponent" @bind-Value="_listSelectionComponent" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" Variant="Variant.Outlined">
             @foreach (MultiSelectionComponent comp in Enum.GetValues(typeof(MultiSelectionComponent)))
             {
@@ -32,7 +32,7 @@
     Align _listAlign = Align.Start;
     MultiSelectionComponent _listSelectionComponent = MultiSelectionComponent.CheckBox;
     MudCheckBox<bool>? _checkboxAlign;
-    bool _disableSelectedItemStyle = false;
+    bool _enableSelectedItemStyle = true;
     private void AlignChanged()
     {
         if (_checkboxAlign?.Value == false)

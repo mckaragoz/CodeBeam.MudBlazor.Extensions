@@ -3,7 +3,7 @@
 <MudGrid>
     <MudItem xs="12" sm="8" Class="d-flex gap-4 align-center justify-center">
         <MudComboBox @bind-Value="@_value" @bind-Text="@_text" @bind-SelectedValues="@_selectedValues" Variant="Variant.Filled" Label="Highlighted" Editable="true" MultiSelection="@_multiselection"
-                     autocomplete="new-password" Color="_color" Clearable="_clearable" Strict="_strict" Highlight="true" HighlightClass="@(_customHighlightClass ? "mud-theme-primary" : null)" DisableFilter="_disableFilter">
+                     autocomplete="new-password" Color="_color" Clearable="_clearable" Strict="_strict" Highlight="true" HighlightClass="@(_customHighlightClass ? "mud-theme-primary" : null)" EnableFilter="_enableFilter">
             <MudComboBoxItem Value="@("Foo")">Foo</MudComboBoxItem>
             <MudComboBoxItem Value="@("Bar")">Bar</MudComboBoxItem>
             <MudComboBoxItem Value="@("Fizz")">Fizz</MudComboBoxItem>
@@ -15,7 +15,7 @@
         </MudComboBox>
 
         <MudComboBox @bind-Value="@_value" @bind-Text="@_text" @bind-SelectedValues="@_selectedValues" Variant="Variant.Filled" Label="With NoItemsContent" Editable="true" MultiSelection="@_multiselection"
-                     autocomplete="new-password" Color="_color" Clearable="_clearable" Strict="_strict" DisableFilter="_disableFilter">
+                     autocomplete="new-password" Color="_color" Clearable="_clearable" Strict="_strict" EnableFilter="_enableFilter">
             <ChildContent>
                 <MudComboBoxItem Value="@("Foo")">Foo</MudComboBoxItem>
                 <MudComboBoxItem Value="@("Bar")">Bar</MudComboBoxItem>
@@ -40,7 +40,7 @@
             <MudSwitchM3 @bind-Value="@_strict" Label="Strict" Color="Color.Secondary" />
             <MudSwitchM3 @bind-Value="@_clearable" Label="Clearable" Color="Color.Secondary" />
             <MudSwitchM3 @bind-Value="@_customHighlightClass" Label="Custom Highlight" Color="Color.Secondary" />
-            <MudSwitchM3 @bind-Value="@_disableFilter" Label="Disable Filter" Color="Color.Secondary" />
+            <MudSwitchM3 @bind-Value="@_enableFilter" Label="Enable Filter" Color="Color.Secondary" />
         </MudStack>
     </MudItem>
 </MudGrid>
@@ -49,13 +49,12 @@
     string? _value;
     string? _text;
     IEnumerable<string>? _selectedValues;
-    Variant _variant = Variant.Outlined;
     Color _color = Color.Primary;
     bool _multiselection;
     bool _clearable;
     bool _strict;
     bool _customHighlightClass;
-    bool _disableFilter = false;
+    bool _enableFilter = true;
 
     private string[] states =
     {
