@@ -29,9 +29,9 @@
                 <MudSelectItem Value="Origin.BottomCenter">Bottom - Center</MudSelectItem>
             </MudSelect>
             <MudNumericField @bind-Value="_padding" Variant="Variant.Outlined" Label="Padding" />
-            <MudCheckBox @bind-Value="_openOnHover" Color="Color.Primary" Label="Open On Hover" />
-            <MudCheckBox @bind-Value="_openOnClick" Color="Color.Primary" Label="Open On Click" />
-            <MudSwitchM3 @ref="_switch" T="bool" Value="_differentIconOnOpen" ValueChanged="@(() => IconChanged(_switch?.Value))" Color="Color.Primary" Label="Different Icon When Open" />
+            <MudCheckBox @bind-Value="_openOnHover" Color="Color.Secondary" Label="Open On Hover" />
+            <MudCheckBox @bind-Value="_openOnClick" Color="Color.Secondary" Label="Open On Click" />
+            <MudSwitchM3 @ref="_switch" T="bool" Value="_differentIconOnOpen" ValueChanged="@(() => IconChanged(_switch?.Value))" Color="Color.Secondary" Label="Different Icon When Open" />
         </MudStack>
     </MudItem>
 </MudGrid>

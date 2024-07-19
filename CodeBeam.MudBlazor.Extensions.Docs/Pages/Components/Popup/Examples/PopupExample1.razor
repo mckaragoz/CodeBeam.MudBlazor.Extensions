@@ -58,7 +58,7 @@ else
                 }
             </MudSelect>
             <MudNumericField @bind-Value="_padding" Min="0" Max="300" Variant="Variant.Outlined" Label="Padding" />
-            <MudSwitch @bind-Value="_enableAnimation" Color="Color.Primary" Label="Enable Animation" />
+            <MudSwitchM3 @bind-Value="_enableAnimation" Color="Color.Secondary" Label="Enable Animation" />
             <MudButton OnClick="@(() => _open = true)">Show Popup</MudButton>
         </MudStack>
     </MudItem>

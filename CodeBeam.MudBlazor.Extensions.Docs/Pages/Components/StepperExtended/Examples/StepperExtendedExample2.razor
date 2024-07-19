@@ -56,7 +56,7 @@
         </MudStepperExtended>
     </MudItem>
 
-    <MudItem xs="12" sm="4" Style="box-shadow: rgba(240, 46, 170, 0.4) -3px 3px;">
+    <MudItem xs="12" sm="4">
         <MudStack Spacing="4">
             <MudNumericField @bind-Value="_infoStepOrder" Label="Info Step Order" @bind-Value:after="@(() => _stepper.ForceRender())" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate="true" />
             <MudNumericField @bind-Value="_optionsStepOrder" Label="Options Step Order" @bind-Value:after="@(() => _stepper.ForceRender())" Margin="Margin.Dense" Variant="Variant.Outlined" Immediate="true" />

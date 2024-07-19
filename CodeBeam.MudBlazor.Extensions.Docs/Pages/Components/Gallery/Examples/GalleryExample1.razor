@@ -22,11 +22,11 @@
 
     <MudItem xs="12" sm="4">
         <MudStack Spacing="4">
-            <MudNumericField @bind-Value="_itemPerLine" Label="Item Per Line" />
-            <MudSwitch @bind-Value="_enableBackdropClick" Color="Color.Primary" Label="Enable Backdrop Click" />
-            <MudSwitch @bind-Value="_showToolboxCloseButton" Color="Color.Primary" Label="Toolbox Close Button" />
-            <MudSwitch @bind-Value="_showToolboxNavigationButtons" Color="Color.Primary" Label="Toolbox Navigation Buttons" />
-            <MudSwitch @bind-Value="_enableAnimation" Color="Color.Primary" Label="Animation" />
+            <MudNumericField @bind-Value="_itemPerLine" Label="Item Per Line" Variant="Variant.Outlined" Margin="Margin.Dense" />
+            <MudSwitchM3 @bind-Value="_enableBackdropClick" Color="Color.Secondary" Label="Enable Backdrop Click" />
+            <MudSwitchM3 @bind-Value="_showToolboxCloseButton" Color="Color.Secondary" Label="Toolbox Close Button" />
+            <MudSwitchM3 @bind-Value="_showToolboxNavigationButtons" Color="Color.Secondary" Label="Toolbox Navigation Buttons" />
+            <MudSwitchM3 @bind-Value="_enableAnimation" Color="Color.Secondary" Label="Animation" />
             <MudSelect @bind-Value="_maxWidth" Variant="Variant.Outlined" Label="MaxWidth" Margin="Margin.Dense" Dense="true">
                 @foreach (MaxWidth item in Enum.GetValues<MaxWidth>())
                 {

@@ -31,12 +31,12 @@
                     <MudSelectItem Value="item">@item.ToDescriptionString()</MudSelectItem>
                 }
             </MudSelect>
-            <MudSwitchM3 @bind-Value="_wheel" Color="Color.Primary" Label="Wheel" />
+            <MudSwitchM3 @bind-Value="_wheel" Color="Color.Secondary" Label="Wheel" />
             <div class="d-flex flex-wrap gap-4">
-                <MudSwitchM3 @bind-Value="_showHour" Color="Color.Primary" Label="Show Hour" />
-                <MudSwitchM3 @bind-Value="_showMinute" Color="Color.Primary" Label="Show Minute" />
-                <MudSwitchM3 @bind-Value="_showSecond" Color="Color.Primary" Label="Show Second" />
-                <MudSwitchM3 @bind-Value="_showMillisecond" Color="Color.Primary" Label="Show Millisecond" />
+                <MudSwitchM3 @bind-Value="_showHour" Color="Color.Secondary" Label="Show Hour" />
+                <MudSwitchM3 @bind-Value="_showMinute" Color="Color.Secondary" Label="Show Minute" />
+                <MudSwitchM3 @bind-Value="_showSecond" Color="Color.Secondary" Label="Show Second" />
+                <MudSwitchM3 @bind-Value="_showMillisecond" Color="Color.Secondary" Label="Show Millisecond" />
             </div>
             <MudTextField @bind-Value="_delimiter" Variant="Variant.Outlined" Label="Delimiter" />
             <MudSelect @bind-Value="_typo" Variant="Variant.Outlined" Label="Typo">

@@ -41,11 +41,11 @@
 
     <MudItem xs="12" sm="4">
         <MudStack Spacing="4">
-            <MudSwitch @bind-Value="_always" Color="Color.Primary" Label="Always" />
-            <MudColorPicker @bind-Value="_baseColor" Label="Base Color" ColorPickerView="ColorPickerView.Grid" Clearable="true" />
-            <MudColorPicker @bind-Value="_textColor" Label="Text Color" ColorPickerView="ColorPickerView.Grid" Clearable="true" />
-            <MudColorPicker @bind-Value="_labelColor" Label="Label Color" ColorPickerView="ColorPickerView.Grid" Clearable="true" />
-            <MudColorPicker @bind-Value="_borderColor" Label="Border Color" ColorPickerView="ColorPickerView.Grid" Clearable="true" />
+            <MudSwitchM3 @bind-Value="_always" Color="Color.Secondary" Label="Always" />
+            <MudColorPicker @bind-Value="_baseColor" Label="Base Color" Variant="Variant.Outlined" ColorPickerView="ColorPickerView.Grid" Clearable="true" />
+            <MudColorPicker @bind-Value="_textColor" Label="Text Color" Variant="Variant.Outlined" ColorPickerView="ColorPickerView.Grid" Clearable="true" />
+            <MudColorPicker @bind-Value="_labelColor" Label="Label Color" Variant="Variant.Outlined" ColorPickerView="ColorPickerView.Grid" Clearable="true" />
+            <MudColorPicker @bind-Value="_borderColor" Label="Border Color" Variant="Variant.Outlined" ColorPickerView="ColorPickerView.Grid" Clearable="true" />
             <MudTextField @bind-Value="_labelStyle" Label="Label Style" Variant="Variant.Outlined" />
             <MudButton OnClick="Reset">Reset</MudButton>
         </MudStack>

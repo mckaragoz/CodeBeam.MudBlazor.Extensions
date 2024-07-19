@@ -55,13 +55,13 @@
 
     <MudItem xs="12" sm="4">
         <MudStack Spacing="4">
-            <MudCheckBox @bind-Value="_hide" Label="Hide" Color="Color.Primary" />
+            <MudCheckBox @bind-Value="_hide" Label="Hide" Color="Color.Secondary" />
 
             <MudField Label="Selector Id" Variant="Variant.Outlined">
                 <MudRadioGroup T="string" @bind-Value="@_selectedOption">
-                    <MudRadio Value="@("")" Color="Color.Primary" Dense="true">All</MudRadio>
-                    <MudRadio Value="@(".id1")" Color="Color.Primary" Dense="true">Only First</MudRadio>
-                    <MudRadio Value="@(".id2")" Color="Color.Primary" Dense="true">Only Last</MudRadio>
+                    <MudRadio Value="@("")" Color="Color.Secondary" Dense="true">All</MudRadio>
+                    <MudRadio Value="@(".id1")" Color="Color.Secondary" Dense="true">Only First</MudRadio>
+                    <MudRadio Value="@(".id2")" Color="Color.Secondary" Dense="true">Only Last</MudRadio>
                 </MudRadioGroup>
             </MudField>
 

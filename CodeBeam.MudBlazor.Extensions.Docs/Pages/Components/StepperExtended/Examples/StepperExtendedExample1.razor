@@ -75,7 +75,7 @@
         </MudStepperExtended>
     </MudItem>
 
-    <MudItem xs="12" sm="4" Style="box-shadow: rgba(240, 46, 170, 0.4) -3px 3px;">
+    <MudItem xs="12" sm="4">
         <MudStack Spacing="4">
             <MudNumericField @bind-Value="_activeIndex" Label="Change ActiveIndex" @bind-Value:after="(() => _stepper.SetActiveStepByIndex(_activeIndex))" Variant="Variant.Outlined" Margin="Margin.Dense" />
             <MudCheckBox @bind-Value="_vertical" Color="Color.Secondary" Label="Vertical" Dense="true" />

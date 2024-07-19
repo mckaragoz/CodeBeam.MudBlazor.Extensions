@@ -20,7 +20,7 @@
     <MudItem xs="12" sm="4">
         <MudStack>
             <MudTextField @bind-Value="_height" Variant="Variant.Outlined" Label="Height px" Clearable />
-            <MudSelect @bind-Value="_color" Variant="Variant.Outlined" Clearable>
+            <MudSelect @bind-Value="_color" Variant="Variant.Outlined" Label="Color" Clearable>
             @foreach (Color col in Enum.GetValues<Color>())
             {
                    <MudSelectItem Value="col">@col.ToDescriptionString()</MudSelectItem>
