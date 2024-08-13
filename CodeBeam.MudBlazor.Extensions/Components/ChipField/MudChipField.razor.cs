@@ -98,6 +98,12 @@ namespace MudExtensions
         public bool Closeable { get; set; } = true;
 
         /// <summary>
+        /// Removes last created chip value when press Backspace. Default is true.
+        /// </summary>
+        [Parameter]
+        public bool BackspaceChipRemoval { get; set; } = true;
+
+        /// <summary>
         /// Maximum chip count. Set 0 to unlimited. Default is 0.
         /// </summary>
         [Parameter]
@@ -119,7 +125,7 @@ namespace MudExtensions
             var result = args.Key;
             if (result.Equals(Delimiter, StringComparison.InvariantCultureIgnoreCase) && _internalValue != null)
             {
-                if (AllowSameValues == false && Values?.Contains(Converter.Set(_internalValue)) == true)
+                if (AllowSameValues == false && Values?.Contains(Converter.Set(_internalValue) ?? string.Empty) == true)
                 {
                     await Task.Delay(10);
                     _internalValue = Converter.Get(Converter.Set(_internalValue)?.Replace(result, null).ToString());
@@ -131,7 +137,7 @@ namespace MudExtensions
                 StateHasChanged();
             }
 
-            if (args.Key == "Backspace" && string.IsNullOrEmpty(Converter.Set(_internalValue)) && Values != null && Values.Any())
+            if (args.Key == "Backspace" && string.IsNullOrEmpty(Converter.Set(_internalValue)) && Values != null && Values.Any() && BackspaceChipRemoval == true)
             {
                 Values.RemoveAt(Values.Count - 1);
                 await ValuesChanged.InvokeAsync(Values);

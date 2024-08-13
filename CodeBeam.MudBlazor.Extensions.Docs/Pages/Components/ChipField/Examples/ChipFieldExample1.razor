@@ -2,8 +2,9 @@
 
 <MudGrid>
     <MudItem xs="12" sm="8" Class="d-flex flex-column gap-8 align-center justify-center">
-        <MudChipField T="string" @bind-Value="_value" @bind-Values="_values" StyleChip="@(_disableRadius ? "border-radius: 0 !important" : null)" Delimiter="@_delimiter" FullWidth="true" Disabled="_disabled" ReadOnly="_readonly"
-            ChipColor="_color" ChipVariant="_chipVariant" ChipSize="_chipSize" WrapChips="_wrapChips" MaxChips="_maxChips" ChipsMaxWidth="_chipsMaxWidth" Closeable="_closeable" Variant="_variant" Label="ChipField" AllowSameValues="@_allowSameValues" />
+        <MudChipField @ref="_chipField" T="string" @bind-Value="_value" @bind-Values="_values" StyleChip="@(_disableRadius ? "border-radius: 0 !important" : null)" Delimiter="@_delimiter" FullWidth="true"
+                      Disabled="_disabled" ReadOnly="_readonly" ChipColor="_color" ChipVariant="_chipVariant" ChipSize="_chipSize" WrapChips="_wrapChips" BackspaceChipRemoval="@_backspaceChipRemoval"
+                      MaxChips="_maxChips" ChipsMaxWidth="_chipsMaxWidth" Closeable="_closeable" Variant="_variant" Label="ChipField" AllowSameValues="@_allowSameValues" />
     </MudItem>
 
     <MudItem xs="12" sm="4">
@@ -48,11 +49,14 @@
             <MudSwitchM3 @bind-Value="@_disableRadius" Label="Disable Border Radius" Color="Color.Secondary" />
             <MudSwitchM3 @bind-Value="@_closeable" Label="Closeable" Color="Color.Secondary" />
             <MudSwitchM3 @bind-Value="@_allowSameValues" Label="Allow Same Values" Color="Color.Secondary" />
+            <MudSwitchM3 @bind-Value="@_backspaceChipRemoval" Label="Backspace Chip Removal" Color="Color.Secondary" />
+            <MudButton Color="Color.Secondary" Variant="Variant. Outlined" OnClick="@(async() => await _chipField.ClearTextField())">Clear Text Field</MudButton>
         </MudStack>
     </MudItem>
 </MudGrid>
 
 @code{
+    MudChipField<string> _chipField = new();
     string _delimiter = " ";
     string? _value;
     List<string>? _values;
@@ -68,4 +72,5 @@
     bool _disableRadius;
     bool _closeable = true;
     bool _allowSameValues = false;
+    bool _backspaceChipRemoval = true;
 }
