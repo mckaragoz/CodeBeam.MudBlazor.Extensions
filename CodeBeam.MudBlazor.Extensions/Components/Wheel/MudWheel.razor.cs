@@ -219,7 +219,7 @@ namespace MudExtensions
                 _animateValue = - GetAnimateValue();
             }
 
-            int changedCount = (Math.Abs((int)args.SwipeDelta) / (Sensitivity == 0 ? 1 : Sensitivity));
+            int changedCount = (Math.Abs((int)(args.SwipeDelta ?? 0)) / (Sensitivity == 0 ? 1 : Sensitivity));
             for (int i = 0; i < changedCount; i++)
             {
                 await _animate.Refresh();
