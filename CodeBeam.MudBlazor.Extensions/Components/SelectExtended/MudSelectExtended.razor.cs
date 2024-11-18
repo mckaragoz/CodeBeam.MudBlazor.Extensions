@@ -775,24 +775,30 @@ namespace MudExtensions
 
             if (firstRender)
             {
-                await KeyInterceptorService.SubscribeAsync(_elementId, new KeyInterceptorOptions()
-                {
-                    //EnableLogging = true,
-                    TargetClass = "mud-input-control",
-                    Keys = {
-                        new KeyOptions { Key=" ", PreventDown = "key+none" }, //prevent scrolling page, toggle open/close
-                        new KeyOptions { Key="ArrowUp", PreventDown = "key+none" }, // prevent scrolling page, instead hilight previous item
-                        new KeyOptions { Key="ArrowDown", PreventDown = "key+none" }, // prevent scrolling page, instead hilight next item
-                        new KeyOptions { Key="Home", PreventDown = "key+none" },
-                        new KeyOptions { Key="End", PreventDown = "key+none" },
-                        new KeyOptions { Key="Escape" },
-                        new KeyOptions { Key="Enter", PreventDown = "key+none" },
-                        new KeyOptions { Key="NumpadEnter", PreventDown = "key+none" },
-                        new KeyOptions { Key="a", PreventDown = "key+ctrl" }, // select all items instead of all page text
-                        new KeyOptions { Key="A", PreventDown = "key+ctrl" }, // select all items instead of all page text
-                        new KeyOptions { Key="/./", SubscribeDown = true, SubscribeUp = true }, // for our users
-                    },
-                }, keyDown: HandleKeyDown, keyUp: HandleKeyUp);
+                var options = new KeyInterceptorOptions(
+                    "mud-input-control",
+                    [
+                        // prevent scrolling page, toggle open/close
+                        new(" ", preventDown: "key+none"),
+                        // prevent scrolling page, instead highlight previous item
+                        new("ArrowUp", preventDown: "key+none"),
+                        // prevent scrolling page, instead highlight next item
+                        new("ArrowDown", preventDown: "key+none"),
+                        new("Home", preventDown: "key+none"),
+                        new("End", preventDown: "key+none"),
+                        new("Escape"),
+                        new("Enter", preventDown: "key+none"),
+                        new("NumpadEnter", preventDown: "key+none"),
+                        // select all items instead of all page text
+                        new("a", preventDown: "key+ctrl"),
+                        // select all items instead of all page text
+                        new("A", preventDown: "key+ctrl"),
+                        // for our users
+                        new("/./", subscribeDown: true, subscribeUp: true)
+                    ]);
+
+                await KeyInterceptorService.SubscribeAsync(_elementId, options, keyDown: HandleKeyDownAsync, keyUp: HandleKeyUpAsync);
+
                 await UpdateTextPropertyAsync(false);
                 _list?.ForceUpdateItems();
                 SelectedListItem = Items.FirstOrDefault(x => x.Value != null && Value != null && x.Value.Equals(Value))?.ListItem;
@@ -813,18 +819,14 @@ namespace MudExtensions
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        /// <returns></returns>
+        protected override async ValueTask DisposeAsyncCore()
         {
-            base.Dispose(disposing);
+            await base.DisposeAsyncCore();
 
-            if (disposing)
+            if (IsJSRuntimeAvailable)
             {
-                if (IsJSRuntimeAvailable)
-                {
-                    //TODO: Use IAsyncDisposable instead.
-                    KeyInterceptorService.UnsubscribeAsync(_elementId).CatchAndLog();
-                }
+                await KeyInterceptorService.UnsubscribeAsync(_elementId);
             }
         }
 
@@ -837,14 +839,14 @@ namespace MudExtensions
         /// Keydown event.
         /// </summary>
         /// <param name="obj"></param>
-        protected internal async Task HandleKeyDown(KeyboardEventArgs obj)
+        protected internal async Task HandleKeyDownAsync(KeyboardEventArgs obj)
         {
             if (Disabled || ReadOnly)
                 return;
 
             if (_list != null && _isOpen)
             {
-                await _list.HandleKeyDown(obj);
+                await _list.HandleKeyDownAsync(obj);
             }
 
             switch (obj.Key)
@@ -914,7 +916,7 @@ namespace MudExtensions
         /// Keyup event.
         /// </summary>
         /// <param name="obj"></param>
-        protected internal async Task HandleKeyUp(KeyboardEventArgs obj)
+        protected internal async Task HandleKeyUpAsync(KeyboardEventArgs obj)
         {
             await OnKeyUp.InvokeAsync(obj);
         }

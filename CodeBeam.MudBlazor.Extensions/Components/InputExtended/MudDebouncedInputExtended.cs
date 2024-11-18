@@ -47,7 +47,7 @@ namespace MudExtensions
         /// 
         /// </summary>
         /// <returns></returns>
-        protected Task OnChange()
+        protected Task OnChanged()
         {
             if (DebounceInterval > 0 && _timer != null)
             {
@@ -133,10 +133,9 @@ namespace MudExtensions
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
+        protected override async ValueTask DisposeAsyncCore()
         {
-            base.Dispose(disposing);
+            await base.DisposeAsyncCore();
             ClearTimer(suppressTick: true);
         }
     }

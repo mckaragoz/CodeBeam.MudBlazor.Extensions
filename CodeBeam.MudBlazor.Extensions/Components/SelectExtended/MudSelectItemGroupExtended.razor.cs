@@ -6,7 +6,7 @@ namespace MudExtensions
     /// <summary>
     /// Represents an option of a select or multi-select. To be used inside MudSelect.
     /// </summary>
-    public partial class MudSelectItemGroupExtended<T> : MudBaseSelectItem
+    public partial class MudSelectItemGroupExtended<T> : MudComponentBase
     {
 
         //private IMudSelect _parent;
@@ -25,6 +25,13 @@ namespace MudExtensions
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
         public string? Text { get; set; }
+
+        /// <summary>
+        /// The content within this item.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.General.Behavior)]
+        public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
         /// A user-defined option that can be selected

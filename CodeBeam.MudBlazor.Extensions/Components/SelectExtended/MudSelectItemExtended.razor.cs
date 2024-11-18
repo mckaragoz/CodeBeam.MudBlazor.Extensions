@@ -8,7 +8,7 @@ namespace MudExtensions
     /// <summary>
     /// Represents an option of a select or multi-select. To be used inside MudSelect.
     /// </summary>
-    public partial class MudSelectItemExtended<T> : MudBaseSelectItem, IDisposable
+    public partial class MudSelectItemExtended<T> : MudComponentBase, IDisposable
     {
         private String GetCssClasses() => new CssBuilder()
             .AddClass(Class)
@@ -101,6 +101,20 @@ namespace MudExtensions
         public T? Value { get; set; }
 
         /// <summary>
+        /// The URL to navigate to when this item is clicked.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.General.ClickAction)]
+        public string? Href { get; set; }
+
+        /// <summary>
+        /// The content within this item.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.General.Behavior)]
+        public RenderFragment? ChildContent { get; set; }
+
+        /// <summary>
         /// Mirrors the MultiSelection status of the parent select
         /// </summary>
         protected bool MultiSelection
@@ -112,6 +126,21 @@ namespace MudExtensions
                 return MudSelectExtended.MultiSelection;
             }
         }
+
+        /// <summary>
+        /// OnClick event.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Behavior)]
+        public EventCallback OnClick { get; set; }
+
+        /// <summary>
+        /// Prevents the user from interacting with this item.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.General.Behavior)]
+        public bool Disabled { get; set; }
+
 
         private bool _isSelected;
         internal bool IsSelected
@@ -142,20 +171,20 @@ namespace MudExtensions
         /// <summary>
         /// 
         /// </summary>
-        protected void HandleOnClick()
+        protected async Task HandleOnClickAsync()
         {
             // Selection works on list. We arrange only popover state and some minor arrangements on click.
-            MudSelectExtended?.SelectOption(Value).CatchAndLog();
-            InvokeAsync(StateHasChanged);
+            await MudSelectExtended?.SelectOption(Value);
+            await InvokeAsync(StateHasChanged);
             if (!MultiSelection)
             {
-                MudSelectExtended?.CloseMenu().CatchAndLog();
+                await MudSelectExtended?.CloseMenu();
             }
             else
             {
-                MudSelectExtended?.FocusAsync().CatchAndLog();
+                MudSelectExtended?.FocusAsync();
             }
-            OnClick.InvokeAsync().CatchAndLog();
+            await OnClick.InvokeAsync();
         }
 
         /// <summary>

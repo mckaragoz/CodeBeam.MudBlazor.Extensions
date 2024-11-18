@@ -27,24 +27,16 @@ namespace MudExtensions.UnitTests.Mocks
 
     public class MockJsEvent : IJsEvent
     {
-        public void Dispose()
-        {
-            
-        }
-
-        public Task Connect(string element, JsEventOptions options)
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task Disconnect()
-        {
-            return Task.CompletedTask;
-        }
-
+#pragma warning disable CS0067
         public event Action<int>? CaretPositionChanged;
         public event Action<string>? Paste;
-        public event Action? Copy;
         public event Action<int, int>? Select;
+#pragma warning restore CS0067
+
+        public Task Connect(string element, JsEventOptions options) => Task.CompletedTask;
+
+        public Task Disconnect() => Task.CompletedTask;
+
+        public ValueTask DisposeAsync() => ValueTask.CompletedTask;
     }
 }

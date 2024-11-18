@@ -744,7 +744,6 @@ namespace MudExtensions
             ParametersChanged?.Invoke();
         }
 
-        private IKeyInterceptor? _keyInterceptor;
         private bool _firstRendered = false;
         /// <summary>
         /// 
@@ -758,24 +757,29 @@ namespace MudExtensions
             {
                 _firstRendered = false;
 
-                await KeyInterceptorService.SubscribeAsync(_elementId, new KeyInterceptorOptions
-                {
-                    //EnableLogging = true,
-                    TargetClass = "mud-list-item-extended",
-                    Keys = {
-                        //new KeyOptions { Key=" ", PreventDown = "key+none" }, //prevent scrolling page, toggle open/close
-                        new KeyOptions { Key="ArrowUp", PreventDown = "key+none" }, // prevent scrolling page, instead hilight previous item
-                        new KeyOptions { Key="ArrowDown", PreventDown = "key+none" }, // prevent scrolling page, instead hilight next item
-                        new KeyOptions { Key="Home", PreventDown = "key+none" },
-                        new KeyOptions { Key="End", PreventDown = "key+none" },
-                        new KeyOptions { Key="Escape" },
-                        new KeyOptions { Key="Enter", PreventDown = "key+none" },
-                        new KeyOptions { Key="NumpadEnter", PreventDown = "key+none" },
-                        new KeyOptions { Key="a", PreventDown = "key+ctrl" }, // select all items instead of all page text
-                        new KeyOptions { Key="A", PreventDown = "key+ctrl" }, // select all items instead of all page text
-                        new KeyOptions { Key="/./", SubscribeDown = true, SubscribeUp = true }, // for our users
-                    },
-                }, KeyObserver.KeyDownIgnore(), KeyObserver.KeyUpIgnore());
+                var options = new KeyInterceptorOptions(
+                    "mud-list-item-extended",
+                    [
+                        // prevent scrolling page, toggle open/close
+                        new(" ", preventDown: "key+none"),
+                        // prevent scrolling page, instead highlight previous item
+                        new("ArrowUp", preventDown: "key+none"),
+                        // prevent scrolling page, instead highlight next item
+                        new("ArrowDown", preventDown: "key+none"),
+                        new("Home", preventDown: "key+none"),
+                        new("End", preventDown: "key+none"),
+                        new("Escape"),
+                        new("Enter", preventDown: "key+none"),
+                        new("NumpadEnter", preventDown: "key+none"),
+                        // select all items instead of all page text
+                        new("a", preventDown: "key+ctrl"),
+                        // select all items instead of all page text
+                        new("A", preventDown: "key+ctrl"),
+                        // for our users
+                        new("/./", subscribeDown: true, subscribeUp: true)
+                    ]);
+
+                await KeyInterceptorService.SubscribeAsync(_elementId, options, keyDown: HandleKeyDownAsync);
 
                 if (MudSelectExtended == null && MudAutocomplete == null)
                 {
@@ -901,7 +905,7 @@ namespace MudExtensions
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        protected internal async Task SearchBoxHandleKeyDown(KeyboardEventArgs obj)
+        protected internal async Task SearchBoxHandleKeyDownAsync(KeyboardEventArgs obj)
         {
             if (Disabled || (!Clickable && !MultiSelection))
                 return;
@@ -924,11 +928,11 @@ namespace MudExtensions
                     break;
                 case "ArrowUp":
                 case "ArrowDown":
-                    await HandleKeyDown(obj);
+                    await HandleKeyDownAsync(obj);
                     break;
                 case "Enter":
                 case "NumpadEnter":
-                    await HandleKeyDown(obj);
+                    await HandleKeyDownAsync(obj);
                     if (MudSelectExtended != null && MultiSelection == false)
                     {
                         await MudSelectExtended.CloseMenu();
@@ -956,7 +960,7 @@ namespace MudExtensions
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        protected internal async Task HandleKeyDown(KeyboardEventArgs obj)
+        protected internal async Task HandleKeyDownAsync(KeyboardEventArgs obj)
         {
             if (Disabled || (!Clickable && !MultiSelection))
                 return;

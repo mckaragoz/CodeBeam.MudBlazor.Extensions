@@ -260,51 +260,51 @@ namespace MudExtensions.UnitTests.Components
             //Console.WriteLine(comp.Markup);
             var list = comp.FindComponent<MudListExtended<int>>().Instance;
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "ArrowDown" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "ArrowDown" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[0].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().BeNullOrEmpty());
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "Enter" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "Enter" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[0].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().ContainSingle());
             //Second item is functional, should skip.
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "ArrowDown" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "ArrowDown" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[0].Instance.IsActive.Should().BeFalse());
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[2].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().ContainSingle());
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "NumpadEnter" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "NumpadEnter" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[2].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().ContainInOrder(new int[] { 1, 3 }));
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "ArrowDown" }));
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "ArrowDown" }));
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "Enter" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "ArrowDown" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "ArrowDown" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "Enter" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[2].Instance.IsActive.Should().BeFalse());
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[5].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().HaveCount(3));
             comp.WaitForAssertion(() => list.SelectedValues.Should().Contain(5));
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "Enter" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "Enter" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[5].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().HaveCount(2));
             comp.WaitForAssertion(() => list.SelectedValues.Should().Contain(3));
             //Last disabled item should not be active
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "End" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "End" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[9].Instance.IsActive.Should().BeTrue());
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "Home" }));
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "Enter" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "Home" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "Enter" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[0].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().HaveCount(1));
             comp.WaitForAssertion(() => list.SelectedValues.Should().NotContain(1));
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "a", CtrlKey = true }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "a", CtrlKey = true }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[0].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().HaveCount(7));
             comp.WaitForAssertion(() => list.SelectedValues.Should().NotContain(2));
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "A", CtrlKey = true }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "A", CtrlKey = true }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[0].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().HaveCount(0));
 
@@ -312,8 +312,8 @@ namespace MudExtensions.UnitTests.Components
             comp.WaitForAssertion(() => list.SelectedValues.Should().HaveCount(1));
             comp.WaitForAssertion(() => list.SelectedValues.Should().Contain(5));
 
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "ArrowDown" }));
-            await comp.InvokeAsync(() => list.HandleKeyDown(new KeyboardEventArgs() { Key = "Enter" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "ArrowDown" }));
+            await comp.InvokeAsync(() => list.HandleKeyDownAsync(new KeyboardEventArgs() { Key = "Enter" }));
             comp.WaitForAssertion(() => comp.FindComponents<MudListItemExtended<int>>()[6].Instance.IsActive.Should().BeTrue());
             comp.WaitForAssertion(() => list.SelectedValues.Should().HaveCount(2));
             comp.WaitForAssertion(() => list.SelectedValues.Should().Contain(6));

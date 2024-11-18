@@ -51,7 +51,7 @@
 
     <div class="d-flex justify-center my-4">
         <MudAutocomplete @bind-Value="_searchedComponent" @bind-Value:after="NavigateSelectedComponent" SearchFunc="@ComponentSearch" Class="search-style" Style="width: calc(50px + 50vw)" MinCharacters="1"
-                         Color="Color.Secondary" Variant="Variant.Outlined" Placeholder="What are you looking for?" Clearable="true" AdornmentIcon="@Icons.Material.Filled.Search"
+                         ProgressIndicatorColor="Color.Secondary" Variant="Variant.Outlined" Placeholder="What are you looking for?" Clearable="true" AdornmentIcon="@Icons.Material.Filled.Search"
                          Adornment="Adornment.Start" AdornmentColor="Color.Secondary" ToStringFunc="@(e => e?.Component?.Name.Replace("`1", null))" MaxItems="null"
                          HelperText='Write "mud" to see all. Also can search from labels - write "utility".'>
             <ItemTemplate>

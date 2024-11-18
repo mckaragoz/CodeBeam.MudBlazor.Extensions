@@ -9,7 +9,7 @@ namespace MudExtensions
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class MudComboBoxItem<T> : MudBaseSelectItem, IDisposable
+    public partial class MudComboBoxItem<T> : MudComponentBase, IDisposable
     {
         /// <summary>
         /// 
@@ -46,6 +46,23 @@ namespace MudExtensions
         MudComboBox<T> MudComboBox { get; set; }
 
         /// <summary>
+        /// Prevents the user from interacting with this item.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.General.Behavior)]
+        public bool Disabled { get; set; }
+
+        /// <summary>
+        /// Shows a ripple effect when the user clicks the button.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>true</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.General.Appearance)]
+        public bool Ripple { get; set; } = true;
+
+        /// <summary>
         /// The text to display
         /// </summary>
         [Parameter]
@@ -58,6 +75,13 @@ namespace MudExtensions
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
         public T? Value { get; set; }
+
+        /// <summary>
+        /// The content within this item.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.General.Behavior)]
+        public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
         /// The color of the text. It supports the theme colors.
@@ -86,6 +110,13 @@ namespace MudExtensions
         [Parameter]
         [Category(CategoryTypes.FormComponent.Appearance)]
         public Size? CheckBoxSize { get; set; } = null;
+
+        /// <summary>
+        /// OnClick event.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Behavior)]
+        public EventCallback OnClick { get; set; }
 
         /// <summary>
         /// 
