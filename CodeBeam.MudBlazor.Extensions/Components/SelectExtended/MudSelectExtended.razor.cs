@@ -11,7 +11,7 @@ namespace MudExtensions
     /// Select component with advanced features.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class MudSelectExtended<T> : MudBaseInputExtended<T?>, IMudSelectExtended, IMudShadowSelectExtended
+    public partial class MudSelectExtended<T> : MudBaseInputExtended<T>, IMudSelectExtended, IMudShadowSelectExtended
     {
 
         #region Constructor, Injected Services, Parameters, Fields
@@ -775,7 +775,6 @@ namespace MudExtensions
 
             if (firstRender)
             {
-                // TODO: Make HandleKeyDown / HandleKeyUp async Task
                 await KeyInterceptorService.SubscribeAsync(_elementId, new KeyInterceptorOptions()
                 {
                     //EnableLogging = true,
@@ -838,7 +837,7 @@ namespace MudExtensions
         /// Keydown event.
         /// </summary>
         /// <param name="obj"></param>
-        protected internal async void HandleKeyDown(KeyboardEventArgs obj)
+        protected internal async Task HandleKeyDown(KeyboardEventArgs obj)
         {
             if (Disabled || ReadOnly)
                 return;
@@ -915,7 +914,7 @@ namespace MudExtensions
         /// Keyup event.
         /// </summary>
         /// <param name="obj"></param>
-        protected internal async void HandleKeyUp(KeyboardEventArgs obj)
+        protected internal async Task HandleKeyUp(KeyboardEventArgs obj)
         {
             await OnKeyUp.InvokeAsync(obj);
         }

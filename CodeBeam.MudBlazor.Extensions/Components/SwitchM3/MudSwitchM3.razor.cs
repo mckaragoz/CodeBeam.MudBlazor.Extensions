@@ -112,7 +112,7 @@ namespace MudExtensions
         /// Keydown event.
         /// </summary>
         /// <param name="obj"></param>
-        protected internal void HandleKeyDown(KeyboardEventArgs obj)
+        protected internal async Task HandleKeyDown(KeyboardEventArgs obj)
         {
             if (Disabled || ReadOnly)
                 return;
@@ -120,21 +120,21 @@ namespace MudExtensions
             {
                 case "ArrowLeft":
                 case "Delete":
-                    SetBoolValueAsync(false);
+                    await SetBoolValueAsync(false);
                     break;
                 case "ArrowRight":
                 case "Enter":
                 case "NumpadEnter":
-                    SetBoolValueAsync(true);
+                    await SetBoolValueAsync(true);
                     break;
                 case " ":
                     if (BoolValue == true)
                     {
-                        SetBoolValueAsync(false);
+                        await SetBoolValueAsync(false);
                     }
                     else
                     {
-                        SetBoolValueAsync(true);
+                        await SetBoolValueAsync(true);
                     }
                     break;
             }

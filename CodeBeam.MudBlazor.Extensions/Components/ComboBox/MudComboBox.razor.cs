@@ -11,7 +11,7 @@ namespace MudExtensions
     /// Component that has select and autocomplete features.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class MudComboBox<T> : MudBaseInputExtended<T?>
+    public partial class MudComboBox<T> : MudBaseInputExtended<T>
     {
         #region Constructor, Injected Services, Parameters, Fields
 
@@ -38,7 +38,7 @@ namespace MudExtensions
         private readonly string? multiSelectionText;
         static readonly KeyInterceptorOptions _keyInterceptorOptions = new()
         {
-            EnableLogging = true,
+            //EnableLogging = true,
             TargetClass = "mud-input-control",
             Keys =
             {
@@ -849,7 +849,6 @@ namespace MudExtensions
 
             if (firstRender)
             {
-                // TODO: Use Task for HandleKeyDown / HandleKeyDown
                 await KeyInterceptorService.SubscribeAsync(_elementId, _keyInterceptorOptions, keyDown: HandleKeyDown, keyUp: HandleKeyUp);
                 await UpdateDataVisualiserTextAsync();
                 _firstRendered = true;
@@ -888,7 +887,7 @@ namespace MudExtensions
         /// Protected keydown event.
         /// </summary>
         /// <param name="obj"></param>
-        protected internal void HandleKeyDown(KeyboardEventArgs obj)
+        protected internal async Task HandleKeyDown(KeyboardEventArgs obj)
         {
             if (Disabled || ReadOnly)
                 return;
@@ -1011,7 +1010,7 @@ namespace MudExtensions
                 case "ArrowDown":
                 case "Enter":
                 case "NumpadEnter":
-                    HandleKeyDown(obj);
+                    await HandleKeyDown(obj);
                     return;
 
                 case "Tab":
@@ -1027,7 +1026,7 @@ namespace MudExtensions
         /// Protected searchbox keyup event.
         /// </summary>
         /// <param name="obj"></param>
-        protected internal void SearchBoxHandleKeyUp(KeyboardEventArgs obj)
+        protected internal async Task SearchBoxHandleKeyUp(KeyboardEventArgs obj)
         {
             ForceRenderItems();
         }
@@ -1036,7 +1035,7 @@ namespace MudExtensions
         /// Protected keyup event.
         /// </summary>
         /// <param name="obj"></param>
-        protected internal async void HandleKeyUp(KeyboardEventArgs obj)
+        protected internal async Task HandleKeyUp(KeyboardEventArgs obj)
         {
             ForceRenderItems();
             await OnKeyUp.InvokeAsync(obj);
