@@ -12,7 +12,7 @@
     {
         <MudFab Color="@Color" OnClick="MainButtonClick" StartIcon="@GetIcon()" Size="@Size" />
     }
-    <MudPopover class="@("d-flex align-center justify-center " + @PopoverClass)" @onmouseenter="PopoverMouseEnter" @onmouseleave="PopoverMouseLeave" Open="@Open" Paper="false" AnchorOrigin="_anchorOrigin" TransformOrigin="_transformOrigin" RelativeWidth="true">
+    <MudPopover class="@("d-flex align-center justify-center " + @PopoverClass)" @onmouseenter="PopoverMouseEnter" @onmouseleave="PopoverMouseLeave" Open="@Open" Paper="false" AnchorOrigin="_anchorOrigin" TransformOrigin="_transformOrigin" RelativeWidth="DropdownWidth.Relative">
         <MudStack Class="@StackClassname" Row="_row" @onclick="HandlePopoverClick">
             @ChildContent
         </MudStack>

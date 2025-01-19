@@ -400,7 +400,7 @@ namespace MudExtensions
         /// <remarks>The default is <c>true</c></remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
-        public bool RelativeWidth { get; set; } = true;
+        public DropdownWidth RelativeWidth { get; set; } = DropdownWidth.Relative;
 
         /// <summary>
         /// Sets the maxheight of the popover.
